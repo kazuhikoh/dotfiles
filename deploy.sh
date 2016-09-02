@@ -2,6 +2,7 @@
 
 SCRIPT_DIR=$(dirname ${BASH_SOURCE})
 DOTFILES='dotfiles'
+DIRCOLORS='dircolors'
 
 if [ -d $DOTFILES ]; then
   echo "${DOTFILES} not found!"
@@ -17,6 +18,6 @@ do
   ln -snfv $$DOTFILES/$f $HOME/$f
 done
 
-ln -s dircolors.ansi-light .dir_colors
+ln -s $DIRCOLORS/dircolors.ansi-light .dir_colors
 
 echo 'Complete!!'
