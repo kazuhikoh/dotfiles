@@ -15,9 +15,9 @@ for f in .??*
 do
   [[ $f = ".git" ]] && continue
   [[ $f = ".gitignore" ]] && continue
-  ln -snfv $$DOTFILES/$f $HOME/$f
+  ln -snfv $DOTFILES/$f $HOME/$f
 done
 
-ln -s $DIRCOLORS/dircolors.ansi-light .dir_colors
+ln -s $DIRCOLORS/dircolors.ansi-light $HOME/.dir_colors
 
 echo 'Complete!!'
