@@ -18,6 +18,6 @@ do
   ln -snfv $DOTFILES/$f $HOME/$f
 done
 
-ln -s $DIRCOLORS/dircolors.ansi-light $HOME/.dir_colors
+ln -s $DOTFILES/$DIRCOLORS/dircolors.ansi-light $HOME/.dir_colors
 
 echo 'Complete!!'
