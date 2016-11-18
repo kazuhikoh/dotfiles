@@ -17,7 +17,7 @@ alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
 # cygwin
-if [ -f "${HOME}/.sh_cygwin" ]; then
-  source "${HOME}/.sh_cygwin"
+if [ -f "${HOME}/.shrc_cygwin" ]; then
+  source "${HOME}/.shrc_cygwin"
 fi
 
