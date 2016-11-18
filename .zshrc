@@ -21,3 +21,7 @@ if [ -f "${HOME}/.shrc_cygwin" ]; then
   source "${HOME}/.shrc_cygwin"
 fi
 
+# extra
+if [ -f "${HOME}/.shrc_extra" ]; then
+  source "${HOME}/.shrc_extra"
+fi
