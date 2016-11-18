@@ -17,11 +17,11 @@ alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
 # cygwin
-if [ -f "${HOME}/.shrc_cygwin" ]; then
-  source "${HOME}/.shrc_cygwin"
+if [ -f "${HOME}/.sh_cygwin" ]; then
+  source "${HOME}/.sh_cygwin"
 fi
 
 # extra
-if [ -f "${HOME}/.shrc_extra" ]; then
-  source "${HOME}/.shrc_extra"
+if [ -f "${HOME}/.sh_extra" ]; then
+  source "${HOME}/.sh_extra"
 fi
