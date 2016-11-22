@@ -45,6 +45,11 @@ alias ls='ls --color=auto'
 alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
+# echo with ANSI Colors
+echoRed() { echo $'\e[0;31m'"$1"$'\e[0m'; }
+echoGreen() { echo $'\e[0;32m'"$1"$'\e[0m'; }
+echoYellow() { echo $'\e[0;33m'"$1"$'\e[0m'; }
+
 # cygwin
 if [ -f "${HOME}/.sh_cygwin" ]; then
   source "${HOME}/.sh_cygwin"
