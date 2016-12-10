@@ -1,11 +1,14 @@
 # For Cygwin
 if [[ "$(uname -o)" == Cygwin ]] ; then
 
-  alias m="mintty.exe -p 100,0 -s 100,30 &"
+  alias m="mintty.exe --daemon"
   alias s=cygstart
 
   alias desktop="cd /cygdrive/c/Users/$USER/Desktop; pwd"
   alias home="cd /cygdrive/c/Users/$USER; pwd"
+  
+  # kill windows process
+  alias wkill='taskkill /F /pid $@'
   
   # sudo
   if [[ -n "$PS1" ]]; then
