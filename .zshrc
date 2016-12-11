@@ -35,7 +35,7 @@ HISTFILE=~/.zsh_history
 ################################
 
 # prompt
-PROMPT='%F{blue}%n@%m%# %f'
+PROMPT='%F{yellow}%n@%m%# %f'
 #PROMPT2=
 #SPROMPT=
 #RPROMPT=
