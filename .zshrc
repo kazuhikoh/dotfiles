@@ -69,3 +69,9 @@ if type jenv >/dev/null; then
   eval "$(jenv init -)"
 fi
 
+# nodebrew [https://github.com/hokaccha/nodebrew]
+# - Node.js version manager
+if type nodebrew >/dev/null; then
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+fi
+
