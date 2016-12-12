@@ -1,0 +1,11 @@
+[core]
+    autoCRLF = false
+[user]
+    email = kazuhiko.hrmt@gmail.com
+    name = kazuhikoh
+[color]
+    ui = true
+[alias]
+    st = status
+    log = log --graph --decorate
+    
