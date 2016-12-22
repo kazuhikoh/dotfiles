@@ -13,7 +13,15 @@ set number
 set ruler
 
 " タブ
-set tabstop=4
+set tabstop=4     " Tab文字表示幅
+
+" インデント
+"set autoindent " 前行インデント継続
+set smartindent " 少し構文理解してくれる?
+"set indentexpr " スクリプトで設定
+
+" 画面右端の折り返しをしない
+set nowrap
 
 " 矩形選択(C^v) で 行末より右にもカーソルを置けるようにする
 set virtualedit=block
