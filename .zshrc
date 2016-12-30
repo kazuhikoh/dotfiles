@@ -62,6 +62,9 @@ fi
 
 ################################
 
+export EDITOR=vim
+export GIT_EDITOR=vim
+
 # jenv [http://www.jenv.be/]
 # - Java environment manager
 if type jenv >/dev/null; then
