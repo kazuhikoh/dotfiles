@@ -208,3 +208,7 @@ fi
 if type -P dircolors >/dev/null ; then
     eval $(dircolors ~/.dir_colors)
 fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/kazuhiko/.sdkman"
+[[ -s "/home/kazuhiko/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kazuhiko/.sdkman/bin/sdkman-init.sh"
