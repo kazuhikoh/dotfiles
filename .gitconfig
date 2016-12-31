@@ -9,3 +9,5 @@
     st = status
     log = log --graph --decorate
     
+[push]
+	default = simple
