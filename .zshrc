@@ -67,7 +67,7 @@ export GIT_EDITOR=vim
 
 # jenv [http://www.jenv.be/]
 # - Java environment manager
-if type jenv >/dev/null; then
+if [[ -d $HOME/.jenv/bin ]]; then
   export PATH="$HOME/.jenv/bin:$PATH"
   eval "$(jenv init -)"
 fi
