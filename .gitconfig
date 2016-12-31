@@ -1,14 +1,16 @@
 [core]
-    autoCRLF = false
+	autoCRLF = false
 [user]
-    email = kazuhiko.hrmt@gmail.com
-    name = kazuhikoh
+	email = kazuhiko.hrmt@gmail.com
+	name = kazuhikoh
 [color]
-    ui = true
+	ui = true
 [alias]
-    st = status
-    br = branch
-    log = log --graph --decorate
-    
+	st = status
+	br = branch
+	co = checkout
+	log = log --graph --decorate
+	
 [push]
 	default = simple
+
