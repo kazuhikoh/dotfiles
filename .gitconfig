@@ -1,5 +1,7 @@
 [core]
 	autoCRLF = false
+	preloadindex = true
+	fscache = true
 [user]
 	email = kazuhiko.hrmt@gmail.com
 	name = kazuhikoh
