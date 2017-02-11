@@ -1,18 +1,20 @@
-[core]
-	autoCRLF = false
-	preloadindex = true
-	fscache = true
 [user]
 	email = kazuhiko.hrmt@gmail.com
 	name = kazuhikoh
-[color]
-	ui = true
 [alias]
 	st = status
 	br = branch
 	co = checkout
 	log = log --graph --decorate
-	
+[core]
+	editor = vim
+	autoCRLF = false
+	preloadindex = true
+	fscache = true
+[merge]
+	ff = false
+[pull]
+	ff = only
 [push]
 	default = simple
 
