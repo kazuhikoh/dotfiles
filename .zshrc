@@ -48,8 +48,8 @@ alias grep='grep --color=auto'
 alias findf='function(){ find . -type f -name $1 }'
 alias findd='function(){ find . -type d -name $1 }'
 
-alias gbuild='function(){ for dir in $@; do echo "<<<<<<<< BUILD $dir >>>>>>>>"; cd $dir && { gradle clean build -x test -x check; cd -; }; done }'
-alias gclean='function(){ for dir in $@; do echo "<<<<<<<< CLEAN $dir >>>>>>>>"; cd $dir && { gradle clean; cd -; }; done }'
+alias gbuild='function(){ for dir in $@; do echoGreen "======== $dir ========"; ( cd $dir && gradle clean build -x test -x check ); done }'
+alias gclean='function(){ for dir in $@; do echoGreen "======== $dir ========"; ( cd $dir && gradle clean ); done }'
 
 # echo with ANSI Colors
 echoRed() { echo $'\e[0;31m'"$1"$'\e[0m'; }
