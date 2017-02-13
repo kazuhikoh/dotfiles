@@ -1,0 +1,47 @@
+# generic
+# ================================
+
+# vim like 
+# --------------------------------
+bind generic G none
+
+# main-view
+# ================================
+set main-view = id date author commit-title:graph=yes,refs=yes
+bind generic U	?git pull
+bind generic P	?git push -u %(remote) %(repo:head)
+
+# vim like
+# --------------------------------
+bind main g move-first-line
+bind main G move-last-line
+
+# split-view
+# ================================
+set split-view-height = 80%
+
+# diff-view
+# ================================
+set diff-context = 5
+
+# vim like
+# --------------------------------
+bind diff l scroll-right
+bind diff h scroll-left
+
+# refs-view
+# ================================
+bind refs b ?git checkout -b %(prompt) %(branch)
+
+# status-view
+# ================================
+bind status r ?git reset --haed HEAD
+
+# pager
+# ================================
+set pager-view = line-number:yes,interval=1 text
+set stage-view = line-number:yes,interval=1 text
+set log-view   = line-number:yes,interval=1 text
+set blob-view  = line-number:yes,interval=1 text
+set diff-view  = line-number:yes,interval=1 text
+
