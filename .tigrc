@@ -1,5 +1,7 @@
 # generic
 # ================================
+bind generic U ?git pull
+bind generic P ?git push -u %(remote) %(repo:head)
 
 # vim like 
 # --------------------------------
@@ -8,8 +10,6 @@ bind generic G none
 # main-view
 # ================================
 set main-view = id date author commit-title:graph=yes,refs=yes
-bind generic U	?git pull
-bind generic P	?git push -u %(remote) %(repo:head)
 
 # vim like
 # --------------------------------
