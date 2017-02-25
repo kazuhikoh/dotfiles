@@ -74,6 +74,13 @@ export LESS='-iNMRj.5'
 export EDITOR=vim
 export GIT_EDITOR=vim
 
+# golang
+# https://golang.org
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
+
 # jenv [http://www.jenv.be/]
 # - Java environment manager
 if [[ -d $HOME/.jenv/bin ]]; then
