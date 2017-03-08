@@ -17,4 +17,6 @@
 	ff = only
 [push]
 	default = simple
+[ghq]
+	root = ~/.ghq
 
