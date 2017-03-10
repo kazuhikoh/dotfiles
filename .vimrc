@@ -81,6 +81,8 @@ if dein#load_state('~/.vim/dein')
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('mhinz/vim-startify')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
