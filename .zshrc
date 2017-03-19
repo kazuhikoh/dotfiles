@@ -90,10 +90,7 @@ fi
 
 # nodebrew [https://github.com/hokaccha/nodebrew]
 # - Node.js version manager
-if type nodebrew >/dev/null; then
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
-fi
-
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/kazuhiko/.sdkman"
