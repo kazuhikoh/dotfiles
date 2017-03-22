@@ -1,0 +1,80 @@
+#!/bin/bash
+
+set -u
+
+usage(){
+  cat <<EOF
+Usage:
+  $0 -h
+  $0 duration outpath
+    duration - 録画時間[分]
+    outpath  - output filepath (mp4)
+
+Description:
+  超A&G+ で配信中の動画を mp4形式で 保存するスクリプト。
+  動画付きの番組の場合、始めの数秒が荒れるので、録画したい時間の少し前から開始したほうが良い。
+
+  超A&G+
+  http://www.agqr.jp/
+
+Options:
+  -h help
+EOF
+}
+
+requirements(){
+  cat <<EOF
+Requirements:
+  - rtmpdump
+  - ffmpeg
+EOF
+}
+
+# options
+while getopts h opts
+do
+  case $opts in
+  h)
+    usage
+    exit 0
+    ;;
+  \?)
+    exit 1
+  esac
+done
+
+# requirements
+readonly REQUIRED_CMDS="rtmpdump ffmpeg"
+for cmd in $REQUIRED_CMDS
+do
+  if ! type ${cmd} >/dev/null 2>&1; then
+    echo "${cmd} not found." >&2
+    requirements
+    exit 1
+  fi
+done
+
+# arguments
+: $1 $2
+
+################################################################
+
+readonly DURATION=$(($1 * 60))               # min -> sec
+readonly OUT_PATH="${2%.*}.mp4"              # fileformat = mp4
+readonly TMP_PATH=${OUT_PATH%.*}.$RANDOM.flv
+
+readonly RTMP_URL="rtmp://fms-base2.mitene.ad.jp/agqr/aandg22"
+
+# create output directory
+if [[ ! -e ${OUT_PATH%/*} ]]; then
+  mkdir -p ${OUT_PATH%/*}
+fi
+
+# recording
+rtmpdump --rtmp ${RTMP_URL} --live -B ${DURATION} -o "${TMP_PATH}"
+
+# flv -> mp4
+ffmpeg -y -i "${TMP_PATH}" -vcodec copy -acodec copy "${OUT_PATH}"
+
+# delete tmpfile
+trap "rm -f \"${TMP_PATH}\"" 0
