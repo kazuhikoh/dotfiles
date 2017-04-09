@@ -4,6 +4,9 @@ set clipboard+=unnamed
 " ファイルフォーマット自動判別
 set fileformats=unix,dos,mac
 
+" 文字列検索ハイライト
+set hlsearch
+
 " Editor
 " ================================
 
