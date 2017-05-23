@@ -35,7 +35,7 @@ bind refs b ?git checkout -b %(prompt) %(branch)
 
 # status-view
 # ================================
-bind status r ?git reset --haed HEAD
+bind status r ?git reset --head HEAD
 
 # pager
 # ================================
