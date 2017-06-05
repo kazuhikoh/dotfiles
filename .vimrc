@@ -80,6 +80,9 @@ Plug 'honza/vim-snippets'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+" golang
+Plug 'fatih/vim-go'
+
 " Initialize plugin system
 call plug#end()
 
