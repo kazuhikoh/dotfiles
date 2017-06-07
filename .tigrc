@@ -10,6 +10,7 @@ bind generic G none
 # main-view
 # ================================
 set main-view = id date author commit-title:graph=yes,refs=yes
+bind main ! ?git revert %(commit)
 
 # vim like
 # --------------------------------
