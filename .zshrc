@@ -95,3 +95,11 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/kazuhiko/.sdkman"
 [[ -s "/home/kazuhiko/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kazuhiko/.sdkman/bin/sdkman-init.sh"
+
+# fzf (https://github.com/junegunn/fzf)
+# Installation using ghq
+# % ghq get https://github.com/junegunn/fzf.git
+# % ln -s $(ghq list --full-path | grep junegunn/fzf) ~/.fzf
+# % ~/.fzf/install
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

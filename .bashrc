@@ -212,3 +212,5 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/kazuhiko/.sdkman"
 [[ -s "/home/kazuhiko/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kazuhiko/.sdkman/bin/sdkman-init.sh"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
