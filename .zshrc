@@ -1,5 +1,8 @@
 zstyle :compinstall filename '~/.zshrc'
 
+# line editor
+bindkey -v
+
 # Use modern completion system
 autoload -Uz compinit
 compinit
