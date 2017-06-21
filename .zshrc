@@ -106,3 +106,15 @@ export SDKMAN_DIR="/home/kazuhiko/.sdkman"
 # % ~/.fzf/install
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Zsh Widgets ###############################
+
+function ghqlist () {
+	local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
+	if [ -n "$selected_dir" ]; then
+		BUFFER="cd ${selected_dir}"
+		zle accept-line
+	fi
+}
+zle -N ghqlist
+bindkey '^]' ghqlist
+
