@@ -82,6 +82,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " Initialize plugin system
 call plug#end()
