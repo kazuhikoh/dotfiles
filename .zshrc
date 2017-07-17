@@ -38,7 +38,7 @@ HISTFILE=~/.zsh_history
 ################################
 
 # prompt
-PROMPT='%F{yellow}%n@%m%# %f'
+PROMPT='%(?.%F{yellow}(⊃＾ω＾)⊃%f.%F{red}(⊃＾ω＾%)⊃%f) '
 #PROMPT2=
 #SPROMPT=
 #RPROMPT=
