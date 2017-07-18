@@ -5,6 +5,7 @@
 	st = status
 	br = branch
 	co = checkout
+	cl = clean
 	log = log --graph --decorate
 [core]
 	editor = vim
