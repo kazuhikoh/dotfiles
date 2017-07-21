@@ -129,5 +129,14 @@ if ! zplug check; then
     zplug install
 fi
 
+zplug "b4b4r07/enhancd", use:init.sh
+
 # source plugins and add commands to the PATH
 zplug load
+
+# zplug check returns true if the given repository exists
+if zplug check b4b4r07/enhancd; then
+    # setting if enhancd is available
+    export ENHANCD_FILTER=fzf
+fi
+
