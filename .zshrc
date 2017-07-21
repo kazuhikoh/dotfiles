@@ -118,3 +118,16 @@ function ghqlist () {
 zle -N ghqlist
 bindkey '^]' ghqlist
 
+# zplug [https://github.com/zplug/zplug]
+# - Zsh Plugin Manager
+export ZPLUG_HOME=~/.zplug
+source ~/.zplug/init.zsh
+
+# zplug check returns true if all packages are installed
+# Therefore, when it returns false, run zplug install
+if ! zplug check; then
+    zplug install
+fi
+
+# source plugins and add commands to the PATH
+zplug load
