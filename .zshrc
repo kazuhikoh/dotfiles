@@ -118,6 +118,8 @@ function ghqlist () {
 zle -N ghqlist
 bindkey '^]' ghqlist
 
+# Plugin Manager #############################
+
 # zplug [https://github.com/zplug/zplug]
 # - Zsh Plugin Manager
 export ZPLUG_HOME=~/.zplug
