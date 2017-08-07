@@ -118,25 +118,32 @@ function ghqlist () {
 zle -N ghqlist
 bindkey '^]' ghqlist
 
+# Plugin Manager #############################
+
 # zplug [https://github.com/zplug/zplug]
 # - Zsh Plugin Manager
 export ZPLUG_HOME=~/.zplug
-source ~/.zplug/init.zsh
+if [[ -f ~/${ZPLUG_HOME}/init.zsh ]]; then
+	source ~/.zplug/init.zsh
 
-# zplug check returns true if all packages are installed
-# Therefore, when it returns false, run zplug install
-if ! zplug check; then
-    zplug install
-fi
+	# zplug check returns true if all packages are installed
+	# Therefore, when it returns false, run zplug install
+	if ! zplug check --verbose; then
+		printf 'Install? [y/N]: '
+		if read -q; then
+			echo; zplug install
+		fi
+	fi
 
-zplug "b4b4r07/enhancd", use:init.sh
+	zplug "b4b4r07/enhancd", use:init.sh
+	
+	# source plugins and add commands to the PATH
+	zplug load
 
-# source plugins and add commands to the PATH
-zplug load
-
-# zplug check returns true if the given repository exists
-if zplug check b4b4r07/enhancd; then
-    # setting if enhancd is available
-    export ENHANCD_FILTER=fzf
+	# zplug check returns true if the given repository exists
+	if zplug check 'b4b4r07/enhancd'; then
+		# setting if enhancd is available
+		export ENHANCD_FILTER=fzf
+	fi
 fi
 
