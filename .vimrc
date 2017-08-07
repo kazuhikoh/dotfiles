@@ -31,6 +31,27 @@ set virtualedit=block
 " Tab Line
 " ================================
 
+" タブ操作 prefix key
+nnoremap	[Tag]	<Nop>
+nmap	t	[Tag]
+
+" t{n} => タブ切替え
+for n in range(1, 9)
+	execute 'nnoremap <silent> [Tag]'.n	':<C-u>tabnext'.n.'<CR>'
+endfor
+
+" tc => 新しいタブ
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+
+" tx => タブを閉じる
+map <silent> [Tag]x :tabclose<CR>
+
+" tn => 次のタブへ(→)
+map <silent> [Tag]n :tabnext<CR>
+
+" tp => 前のタブへ(←)
+map <silent> [Tag]p :tabprevious<CR>
+
 " タブラインを常に表示
 set showtabline=2
 
