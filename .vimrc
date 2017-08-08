@@ -101,6 +101,7 @@ Plug 'honza/vim-snippets'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+let g:NERDTreeShowHiddenFiles=1
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
