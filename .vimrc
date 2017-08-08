@@ -100,6 +100,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
