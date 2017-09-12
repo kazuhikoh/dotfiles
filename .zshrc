@@ -1,12 +1,9 @@
-zstyle :compinstall filename '~/.zshrc'
-
-# line editor
 bindkey -v
 
-# Use modern completion system
-autoload -Uz compinit
-compinit
 
+autoload -Uz compinit
+
+zstyle ':compinstall' filename '~/.zshrc'
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -24,6 +21,8 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+compinit
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
