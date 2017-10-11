@@ -103,6 +103,9 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 let g:NERDTreeShowHiddenFiles=1
 
+" kotlin
+Plug 'udalov/kotlin-vim'
+
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
