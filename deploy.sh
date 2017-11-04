@@ -12,6 +12,7 @@ do
 done
 
 ln -svf $SCRIPT_DIR/bin $HOME/bin
+ln -svf $SCRIPT_DIR/etc $HOME/etc
 
 ln -svf $SCRIPT_DIR/dircolors/dircolors.ansi-light $HOME/.dir_colors
 

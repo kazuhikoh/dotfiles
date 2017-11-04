@@ -203,26 +203,27 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[00;34m\]\u@\h$\[\033[00m\] '
 ################################
 
 # env
-if [ -f "${HOME}/.envrc" ]; then
-  source "${HOME}/.envrc"
+if [ -f "${HOME}/etc/.envrc" ]; then
+  source "${HOME}/etc/.envrc"
 fi
 
 # alias
-if [ -f "${HOME}/.aliasrc" ]; then
-  source "${HOME}/.aliasrc"
+if [ -f "${HOME}/etc/.aliasrc" ]; then
+  source "${HOME}/etc/.aliasrc"
 fi
 
 # colors
-if [ -f "${HOME}/.colorrc" ]; then
-  source "${HOME}/.colorrc"
+if [ -f "${HOME}/etc/.colorrc" ]; then
+  source "${HOME}/etc/.colorrc"
 fi
 
 # cygwin
-if [ -f "${HOME}/.sh_cygwin" ]; then
-  source "${HOME}/.sh_cygwin"
+if [ -f "${HOME}/etc/.sh_cygwin" ]; then
+  source "${HOME}/etc/.sh_cygwin"
 fi
 
 # extra
-if [ -f "${HOME}/.sh_extra" ]; then
-  source "${HOME}/.sh_extra"
+if [ -f "${HOME}/etc/.sh_extra" ]; then
+  source "${HOME}/etc/.sh_extra"
 fi
+
