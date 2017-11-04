@@ -66,8 +66,9 @@ readonly TMP_PATH=${OUT_PATH%.*}.$RANDOM.flv
 readonly RTMP_URL="rtmp://fms-base2.mitene.ad.jp/agqr/aandg22"
 
 # create output directory
-if [[ ! -e ${OUT_PATH%/*} ]]; then
-  mkdir -p ${OUT_PATH%/*}
+readonly OUT_DIR=$(dirname "${OUT_PATH}")
+if [[ ! -e "${OUT_DIR}" ]]; then
+  mkdir -p "${OUT_DIR}"
 fi
 
 # recording
