@@ -27,4 +27,4 @@ MAILTO="kazuhiko.hrmt@gmail.com"
 DIR_AGQR=cronout/agqr
 
 # 毎週水曜25:30-26:00 徳井青空のまぁるくなぁれ！
-30 01 * * 4 agrec 30 $HOME/$DIR_AGQR/徳井青空のまぁるくなぁれ！/maru.$(date "+\%y\%m\%d").mp4
+30 01 * * 4 agrec 30 $HOME/$DIR_AGQR/徳井青空のまぁるくなぁれ！/maru.$(date "+\%y\%m\%d").flv
