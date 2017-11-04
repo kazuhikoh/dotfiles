@@ -70,6 +70,9 @@ fi
 
 ################################
 
+# User Command
+export PATH=$PATH:~/bin
+
 export PAGER=less
 export LESS='-iNMRj.5'
 
