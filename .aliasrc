@@ -3,3 +3,6 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias h='history'
+
+alias grep="grep --color=auto"
+

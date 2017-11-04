@@ -1,6 +1,5 @@
 bindkey -v
 
-
 autoload -Uz compinit
 
 zstyle ':compinstall' filename '~/.zshrc'
@@ -34,29 +33,28 @@ HISTFILE=~/.zsh_history
 #promptinit
 #prompt adam1
 
-################################
-
 # prompt
 PROMPT='%(?.%F{yellow}(⊃＾ω＾)⊃%f.%F{red}(⊃＾ω＾%)⊃%f) '
 #PROMPT2=
 #SPROMPT=
 #RPROMPT=
 
-# aliases
-alias ls='ls --color=auto'
-alias ll='ls -alF --color=auto'
-alias grep='grep --color=auto'
+################################
 
-alias findf='function(){ find . -type f -name $1 }'
-alias findd='function(){ find . -type d -name $1 }'
+# env
+if [ -f "${HOME}/.envrc" ]; then
+  source "${HOME}/.envrc"
+fi
 
-alias gbuild='function(){ for dir in $@; do echoGreen "======== $dir ========"; ( cd $dir && gradle clean build -x test -x check ); done }'
-alias gclean='function(){ for dir in $@; do echoGreen "======== $dir ========"; ( cd $dir && gradle clean ); done }'
+# alias
+if [ -f "${HOME}/.aliasrc" ]; then
+  source "${HOME}/.aliasrc"
+fi
 
-# echo with ANSI Colors
-echoRed() { echo $'\e[0;31m'"$1"$'\e[0m'; }
-echoGreen() { echo $'\e[0;32m'"$1"$'\e[0m'; }
-echoYellow() { echo $'\e[0;33m'"$1"$'\e[0m'; }
+# colors
+if [ -f "${HOME}/.colorrc" ]; then
+  source "${HOME}/.colorrc"
+fi
 
 # cygwin
 if [ -f "${HOME}/.sh_cygwin" ]; then
@@ -67,46 +65,6 @@ fi
 if [ -f "${HOME}/.sh_extra" ]; then
   source "${HOME}/.sh_extra"
 fi
-
-################################
-
-# User Command
-export PATH=$PATH:~/bin
-
-export PAGER=less
-export LESS='-iNMRj.5'
-
-export EDITOR=vim
-export GIT_EDITOR=vim
-
-# golang
-# https://golang.org
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
-
-# jenv [http://www.jenv.be/]
-# - Java environment manager
-if [[ -d $HOME/.jenv/bin ]]; then
-  export PATH="$HOME/.jenv/bin:$PATH"
-  eval "$(jenv init -)"
-fi
-
-# nodebrew [https://github.com/hokaccha/nodebrew]
-# - Node.js version manager
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/kazuhiko/.sdkman"
-[[ -s "/home/kazuhiko/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kazuhiko/.sdkman/bin/sdkman-init.sh"
-
-# fzf (https://github.com/junegunn/fzf)
-# Installation using ghq
-# % ghq get https://github.com/junegunn/fzf.git
-# % ln -s $(ghq list --full-path | grep junegunn/fzf) ~/.fzf
-# % ~/.fzf/install
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Zsh Widgets ###############################
 

@@ -197,20 +197,32 @@
 # 
 # alias cd=cd_func
 
+# prompt
 PS1='${debian_chroot:+($debian_chroot)}\[\033[00;34m\]\u@\h$\[\033[00m\] '
 
+################################
+
+# env
+if [ -f "${HOME}/.envrc" ]; then
+  source "${HOME}/.envrc"
+fi
+
 # alias
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f "${HOME}/.aliasrc" ]; then
+  source "${HOME}/.aliasrc"
 fi
 
-# dir_colors
-if type -P dircolors >/dev/null ; then
-    eval $(dircolors ~/.dir_colors)
+# colors
+if [ -f "${HOME}/.colorrc" ]; then
+  source "${HOME}/.colorrc"
 fi
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/kazuhiko/.sdkman"
-[[ -s "/home/kazuhiko/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kazuhiko/.sdkman/bin/sdkman-init.sh"
+# cygwin
+if [ -f "${HOME}/.sh_cygwin" ]; then
+  source "${HOME}/.sh_cygwin"
+fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# extra
+if [ -f "${HOME}/.sh_extra" ]; then
+  source "${HOME}/.sh_extra"
+fi
