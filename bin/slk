@@ -12,7 +12,7 @@ Description:
   Send a message to Slack by using Incoming Webhook.
   Webhook URL must be defined in '~/etc/.slackconfig' as following.
 
-  piyopiyo=https://hooks.slack.com/services/T6N2B49RT/XXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYY
+  piyopiyo=https://hooks.slack.com/services/XXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYY
   
   Formats:
   <id>=<url>
