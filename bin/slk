@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -u
+
+usage(){
+  cat <<EOF
+Usage:
+  $0 -h
+  $0 message
+
+Description:
+  Send a message to Slack by using Incoming Webhook.
+  Webhook URL must be defined in '~/etc/.slackconfig' as following.
+
+  piyopiyo=https://hooks.slack.com/services/T6N2B49RT/XXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYY
+  
+  Formats:
+  <id>=<url>
+  * id : webhook id. you can specify message destination by id. (coming soon!)
+  * url : webhook URL. Please get from https://slack.com/services/new/incoming-webhook 
+  * Definition starting the character '#' is ignored.
+  
+Options:
+  -h help
+EOF
+}
+
+# options
+while getopts h opts
+do
+  case $opts in
+  h)
+    usage
+	exit 0
+	;;
+  \?)
+    exit 1
+  esac
+done
+
+# requirements
+readonly REQUIRED_CMDS="curl"
+for cmd in $REQUIRED_CMDS
+do
+  if ! type $cmd >/dev/null 2>&1; then
+	{
+      echo "$cmd not found."
+	  cat 'Requirements:'
+	  for c in $REQUIRED_CMDS; do echo "  - $c"; done
+	} >&2
+	exit 1
+  fi
+done
+
+# arguments
+: $1
+
+################################################################
+
+readonly MESSAGE=$1
+readonly CONFIG="$HOME/etc/.slackconfig"
+
+# Webhook URL
+readonly WEBHOOK_URL=$(grep -v '^#.*' "$CONFIG" | head -n 1 | sed -e 's/^[^=]*=//')
+[[ -z "$WEBHOOK_URL" ]] && {
+  echo 'Webhook URL is not defined.' >&2
+  exit 1;
+}
+
+# Send Message
+curl -X POST -d "payload={\"text\": \"$MESSAGE\"}" $WEBHOOK_URL
+
