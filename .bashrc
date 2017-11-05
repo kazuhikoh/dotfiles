@@ -218,8 +218,8 @@ if [ -f "${HOME}/etc/.colorrc" ]; then
 fi
 
 # cygwin
-if [ -f "${HOME}/etc/.sh_cygwin" ]; then
-  source "${HOME}/etc/.sh_cygwin"
+if [ -f "${HOME}/etc/.aliasrc.cygwin" ]; then
+  source "${HOME}/etc/.aliasrc.cygwin"
 fi
 
 # extra
