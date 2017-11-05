@@ -70,5 +70,22 @@ if [[ ! -e "${OUT_DIR}" ]]; then
 fi
 
 # recording
-rtmpdump --rtmp ${RTMP_URL} --live --stop ${DURATION} -o "${OUT_PATH}"
+readonly LOG=$(mktemp -p . agrec.log.XXXXXX)
+rtmpdump --rtmp ${RTMP_URL} --live --stop ${DURATION} -o "${OUT_PATH}" >$LOG 2>&1 \
+|| {
+  cat $LOG 1>&2
+  exit 1
+}
+
+# result
+(
+  cd $OUT_DIR
+  pwd
+  ls -alh ${OUT_PATH##*/}
+)
+
+# finalize
+trap "
+rm $LOG
+" 0
 
