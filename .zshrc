@@ -62,8 +62,8 @@ if [ -f "${HOME}/etc/.aliasrc.cygwin" ]; then
 fi
 
 # extra
-if [ -f "${HOME}/etc/.sh_extra" ]; then
-  source "${HOME}/etc/.sh_extra"
+if [ -f "${HOME}/etc/.extrarc" ]; then
+  source "${HOME}/etc/.extrarc"
 fi
 
 # Zsh Widgets ###############################
