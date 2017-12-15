@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# html=$(curl -Ls http://piyo.fc2.com/soramaru/)
+html=$(curl -Ls http://piyo.fc2.com/soramaru/5987942/)
+
+MESSAGE=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/text()" --html - 2>/dev/null | tr -d '\t')
+
+DATE=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='entry_date']/p/text()" --html - 2>/dev/null)
+
+TIME=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/ul[@class='posted']/li[@class='time_stamp']/a/text()" --html - 2>/dev/null | tr -d '\t')
+
+IMAGE_TAGS=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/img" --html - 2>/dev/null | tr -d '\t')
+IMAGE_THUMB_URL=http:$(echo $IMAGE_TAGS | grep -oP '(?<=src=")[^"]*(?=")')
+IMAGE_URL=http:$(echo $IMAGE_TAGS | grep -oP '(?<=dumy=")[^"]*(?=")')
+
+ANCHOR_TAGS=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/a" --html - 2>/dev/null)
+ANCHOR_HREFS=http://piyo.fc2.com/$(echo $ANCHOR_TAGS | grep -oP '(?<=href=")[^"]*(?=")')
+
+echo date: $DATE
+echo time: $TIME
+echo message: $MESSAGE
+
+echo thumb: $IMAGE_THUMB_URL
+echo url  : $IMAGE_URL
+
+echo links: $ANCHOR_HREFS
