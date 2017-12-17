@@ -31,7 +31,15 @@ echo time: $TIME
 echo message:
 echo "$MESSAGE"
 
-echo thumb-urls: $IMAGE_THUMB_URL
-echo image-urls: $IMAGE_URL
+if [ ! -z "$IMAGE_THUMB_URL" ]; then
+	echo thumb-urls: $IMAGE_THUMB_URL
+fi
 
-echo links: $ANCHOR_HREFS
+if [ ! -z "$IMAGE_URL" ]; then 
+	echo image-urls: $IMAGE_URL
+fi
+
+if [ ! -z "$ANCHOR_HREFS" ]; then
+	echo links: $ANCHOR_HREFS
+fi
+
