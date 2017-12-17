@@ -3,8 +3,15 @@
 # html=$(curl -Ls http://piyo.fc2.com/soramaru/)
 html=$(curl -Ls http://piyo.fc2.com/soramaru/5987942/)
 
-MESSAGE=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/text()" --html - 2>/dev/null | tr -d '\t')
+# To output MESSAGE keeping original line break,
+# xmllint must be receive a html that contains line-break character (\n) at same position as br tags.
+# Because, xpath statement '/text()' will extract ONLY text. 
+# This formatting consist of following steps:
+# 1. Remove all line-break after <br>
+# 2. Append line-break after <br>
+html="$(echo $html | sed -e 's/<br[ /]*>/<br>\r\n/g')"
 
+MESSAGE="$(echo "$html" | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/text()" --html - 2>/dev/null | tr -d '\t')"
 DATE=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='entry_date']/p/text()" --html - 2>/dev/null)
 
 TIME=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/ul[@class='posted']/li[@class='time_stamp']/a/text()" --html - 2>/dev/null | tr -d '\t')
@@ -18,7 +25,8 @@ ANCHOR_HREFS=http://piyo.fc2.com/$(echo $ANCHOR_TAGS | grep -oP '(?<=href=")[^"]
 
 echo date: $DATE
 echo time: $TIME
-echo message: $MESSAGE
+echo message:
+echo "$MESSAGE"
 
 echo thumb: $IMAGE_THUMB_URL
 echo url  : $IMAGE_URL
