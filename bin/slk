@@ -52,12 +52,9 @@ do
   fi
 done
 
-# arguments
-: $1
-
 ################################################################
 
-readonly MESSAGE=$1
+readonly MESSAGE=$( [ -p /dev/stdin ] && cat - || echo "$1" )
 readonly CONFIG="$HOME/etc/.slackconfig"
 
 # Webhook URL
