@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# html=$(curl -Ls http://piyo.fc2.com/soramaru/)
-html=$(curl -Ls http://piyo.fc2.com/soramaru/5987942/)
+readonly DEFAULT_URL=http://piyo.fc2.com/soramaru/
+readonly URL=$([ ! -z "$1" ] && echo "$1" || echo "$DEFAULT_URL")
 
+html=$(curl -Ls "$URL")
 # To output MESSAGE keeping original line break,
 # xmllint must be receive a html that contains line-break character (\n) at same position as br tags.
 # Because, xpath statement '/text()' will extract ONLY text. 
