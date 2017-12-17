@@ -14,11 +14,11 @@ Description:
 
   piyopiyo=https://hooks.slack.com/services/XXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYY
   
-  Formats:
+  Format:
   <id>=<url>
   * id : webhook id. you can specify message destination by id. (coming soon!)
   * url : webhook URL. Please get from https://slack.com/services/new/incoming-webhook 
-  * Definition starting the character '#' is ignored.
+  * Definition starting with the character '#' is ignored.
   
 Options:
   -h help
