@@ -4,6 +4,7 @@ readonly DEFAULT_URL=http://piyo.fc2.com/soramaru/
 readonly URL=$([ ! -z "$1" ] && echo "$1" || echo "$DEFAULT_URL")
 
 html=$(curl -Ls "$URL")
+
 # To output MESSAGE keeping original line break,
 # xmllint must be receive a html that contains line-break character (\n) at same position as br tags.
 # Because, xpath statement '/text()' will extract ONLY text. 
@@ -19,7 +20,7 @@ DATE=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[
 TIME=$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/ul[@class='posted']/li[@class='time_stamp']/a/text()" --html - 2>/dev/null | tr -d '\t')
 
 IMAGE_TAGS="$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/img" --html - 2>/dev/null | tr -d '\t')"
-IMAGE_THUMB_URL="$(echo $IMAGE_TAGS | grep -oP '(?<=src=")[^"]*(?=")' | xargs -I{} "http:{}")"
+IMAGE_THUMB_URL="$(echo $IMAGE_TAGS | grep -oP '(?<=src=")[^"]*(?=")' | xargs -I{} echo "http:{}")"
 IMAGE_URL="$(echo $IMAGE_TAGS | grep -oP '(?<=dumy=")[^"]*(?=")' | xargs -I{} echo "http:{}")"
 
 ANCHOR_TAGS="$(echo $html | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/a" --html - 2>/dev/null)"
