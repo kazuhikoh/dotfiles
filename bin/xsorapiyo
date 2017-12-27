@@ -11,7 +11,7 @@ html=$(curl -Ls "$URL")
 # This formatting consist of following steps:
 # 1. Remove all line-break after <br>
 # 2. Append line-break after <br>
-html="$(echo $html | sed -e 's/<br[ /]*>/<br>\r\n/g')"
+html="$(echo $html | sed -e 's/<br[ /]*>/<br>\n/g')"
 
 MESSAGE="$(echo "$html" | xmllint --xpath "//div[@class='article'][position()=1]//div[@class='article_box']/*[1]/div[@class='message_body']/text()" --html - 2>/dev/null | tr -d '\t')"
 
