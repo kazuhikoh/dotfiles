@@ -65,5 +65,8 @@ readonly WEBHOOK_URL=$(grep -v '^#.*' "$CONFIG" | head -n 1 | sed -e 's/^[^=]*=/
 }
 
 # Send Message
-curl -X POST -d "payload={\"text\": \"$MESSAGE\"}" $WEBHOOK_URL
+if [ ! -z $MESSAGE ]; then
+  curl -X POST -d "payload={\"text\": \"$MESSAGE\"}" $WEBHOOK_URL
+fi
+
 
