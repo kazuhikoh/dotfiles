@@ -1,5 +1,33 @@
 #!/bin/bash
 
+usage(){
+  cat <<GUMOR
+Usage:
+  $0 -h
+  $0 URL  
+  
+Description:
+  ⊂(＾ω＾)⊃
+
+Options:
+  -h help
+GUMOR
+}
+
+
+# options
+while getopts h opts
+do
+  case $opts in
+  h)
+    usage
+	exit 0
+	;;
+  \?)
+    exit 1
+  esac
+done
+
 readonly DEFAULT_URL=http://piyo.fc2.com/soramaru/
 readonly URL=$([ ! -z "$1" ] && echo "$1" || echo "$DEFAULT_URL")
 
