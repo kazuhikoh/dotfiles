@@ -28,18 +28,17 @@ ANCHOR_HREFS="$(echo $ANCHOR_TAGS | grep -oP '(?<=href=")[^"]*(?=")' | xargs -I{
 
 echo date $DATE
 echo time $TIME
-echo message
-echo "$MESSAGE"
+echo "$MESSAGE" | awk 'NF > 0 {printf("message %s\n", $0)}'
 
 if [ ! -z "$IMAGE_THUMB_URL" ]; then
-	echo thumb-urls $IMAGE_THUMB_URL
+	echo "$IMAGE_THUMB_URL" | awk 'NF > 0 {printf("thumb %s\n", $0)}'
 fi
 
 if [ ! -z "$IMAGE_URL" ]; then 
-	echo image-urls $IMAGE_URL
+	echo "$IMAGE_URL" | awk 'NF > 0 {printf("image %s\n", $0)}'
 fi
 
 if [ ! -z "$ANCHOR_HREFS" ]; then
-	echo links $ANCHOR_HREFS
+	echo "$ANCHOR_HREFS" | awk 'NF > 0 {printf("link %s\n", $0)}'
 fi
 
