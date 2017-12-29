@@ -63,9 +63,9 @@ done
 
 ################################################################
 
+readonly CONFIG="$HOME/etc/.slackconfig"
 readonly MESSAGE=$( [ -p /dev/stdin ] && cat - || echo "$1" )
 readonly CHANNEL=${option_channel}
-readonly CONFIG="$HOME/etc/.slackconfig"
 
 # Webhook URL
 readonly WEBHOOK_URL=$(grep -v '^#.*' "$CONFIG" | head -n 1 | sed -e 's/^[^=]*=//')
