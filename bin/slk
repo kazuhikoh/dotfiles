@@ -6,7 +6,7 @@ usage(){
   cat <<EOF
 Usage:
   $0 -h
-  $0 message
+  $0 [-c CHANNEL] message
 
 Description:
   Send a message to Slack by using Incoming Webhook.
@@ -22,21 +22,30 @@ Description:
   
 Options:
   -h help
+  -c channel 
 EOF
 }
 
+################################################################
+
+option_channel=''
+
 # options
-while getopts h opts
+while getopts hc: opts
 do
   case $opts in
   h)
     usage
 	exit 0
 	;;
+  c)
+    readonly option_channel="$OPTARG"
+	;;
   \?)
     exit 1
   esac
 done
+shift $((OPTIND - 1))
 
 # requirements
 readonly REQUIRED_CMDS="curl"
@@ -55,6 +64,7 @@ done
 ################################################################
 
 readonly MESSAGE=$( [ -p /dev/stdin ] && cat - || echo "$1" )
+readonly CHANNEL=${option_channel}
 readonly CONFIG="$HOME/etc/.slackconfig"
 
 # Webhook URL
@@ -66,7 +76,13 @@ readonly WEBHOOK_URL=$(grep -v '^#.*' "$CONFIG" | head -n 1 | sed -e 's/^[^=]*=/
 
 # Send Message
 if [ ! -z $MESSAGE ]; then
-  curl -X POST -d "payload={\"text\": \"$MESSAGE\"}" $WEBHOOK_URL
+  payload=''
+  # channel
+  [ ! -z $CHANNEL ] && payload="${payload}\"channel\": \"$CHANNEL\","
+  # text
+  payload="${payload}\"text\": \"$MESSAGE\""
+
+  curl -X POST -d "payload={${payload}}" $WEBHOOK_URL
 fi
 
 
