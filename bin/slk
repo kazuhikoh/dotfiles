@@ -75,7 +75,7 @@ readonly WEBHOOK_URL=$(grep -v '^#.*' "$CONFIG" | head -n 1 | sed -e 's/^[^=]*=/
 }
 
 # Send Message
-if [ ! -z $MESSAGE ]; then
+if [ ! -z "$MESSAGE" ]; then
   payload=''
   # channel
   [ ! -z $CHANNEL ] && payload="${payload}\"channel\": \"$CHANNEL\","
