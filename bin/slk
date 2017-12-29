@@ -17,7 +17,7 @@ Description:
   Format:
   <id>=<url>
   * id : webhook id. you can specify message destination by id. (coming soon!)
-  * url : webhook URL. Please get from https://slack.com/services/new/incoming-webhook 
+  * url : webhook URL. Let's get it from <https://slack.com/services/new/incoming-webhook>!
   * Definition starting with the character '#' is ignored.
   
 Options:
