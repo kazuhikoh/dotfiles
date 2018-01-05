@@ -40,6 +40,10 @@ readonly DEFAULT_URL=http://piyo.fc2.com/soramaru/
 readonly URL=$([ ! -z "$1" ] && echo "$1" || echo "$DEFAULT_URL")
 
 html=$(curl -Ls "$URL")
+if [ -z "$html" ]; then
+  echo >&2 "Fetching html failed: ${URL}"
+  exit 1
+fi
 
 # To output MESSAGE keeping original line break,
 # xmllint needs to receive a html that contains line-break character (\n) at same position as br tags.
