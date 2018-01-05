@@ -42,8 +42,8 @@ readonly URL=$([ ! -z "$1" ] && echo "$1" || echo "$DEFAULT_URL")
 html=$(curl -Ls "$URL")
 
 # To output MESSAGE keeping original line break,
-# xmllint must be receive a html that contains line-break character (\n) at same position as br tags.
-# Because, xpath statement '/text()' will extract ONLY text. 
+# xmllint needs to receive a html that contains line-break character (\n) at same position as br tags.
+# Because, xpath statement '/text()' extract ONLY text. 
 # This formatting consist of following steps:
 # 1. Remove all line-break after <br>
 # 2. Append line-break after <br>
