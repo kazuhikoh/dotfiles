@@ -1,0 +1,93 @@
+#!/bin/bash
+
+usage(){
+  cat <<EOF
+Usage:
+  $0 -h
+  $0 [URL] 
+  
+Description:
+  create command for nicovideo downloading.
+
+Options:
+  -h help
+EOF
+}
+
+# options
+while getopts h opts
+do
+  case $opts in
+  h)
+    usage
+	exit 0
+	;;
+  \?)
+    exit 1
+  esac
+done
+shift $((OPTIND - 1))
+
+trapp() {
+  trap "$1;$(
+         echo $(trap -p $2) | sed -r "s/[^']+'(.+)'[^']+$/\1/"
+       )" $2
+}
+
+# config
+readonly VIDEO_URL="$1"
+readonly CONFIG_DIRPATH="$HOME/.nico/"
+readonly CONFIG_FILENAME='config'
+
+# Does config directory exist?
+if [ ! -d ${CONFIG_DIRPATH} ]; then
+  echo >&2 "config directory not found. (${CONFIG_DIRPATH})"
+  exit 1
+fi
+
+readonly MAIL="$(grep -oP '(?<=^mail=).*' "${CONFIG_DIRPATH}${CONFIG_FILENAME}")"
+readonly PASS="$(grep -oP '(?<=^pass=).*' "${CONFIG_DIRPATH}${CONFIG_FILENAME}")"
+
+# Create cookie file
+readonly COOKIE=$(mktemp -p "${CONFIG_DIRPATH}" cookie.XXXXXXXXXX)
+trapp "rm -rf ${COOKIE}" EXIT
+
+# Login
+login() {
+  echo MAIL:${MAIL}
+  echo PASS:${PASS}
+  curl -c ${COOKIE} 'https://account.nicovideo.jp/login' >/dev/null 
+  curl -b ${COOKIE} -c ${COOKIE} -X POST -d "mail_tel=${MAIL}&password=${PASS}" 'https://account.nicovideo.jp/api/v1/login' >/dev/null
+}
+
+# Download timeshift video
+print_command_for_timeshift() {
+  local LIVE_ID=$(echo "${VIDEO_URL}" | grep -oP '(?<=live.nicovideo.jp/watch/lv)[^?]*')
+  local API="http://watch.live.nicovideo.jp/api/getplayerstatus?v=lv${LIVE_ID}"
+  local STATUS_XML=$(mktemp -p "${CONFIG_DIRPATH}" getplayerstatus.XXXXXXXXXX)
+  trapp "rm -rf ${STATUS_XML}" EXIT
+
+  # player status
+  curl -b ${COOKIE} -c ${COOKIE} "${API}" > ${STATUS_XML}
+
+  local TITLE="$(grep -oP '(?<=<title>)[^<]*' ${STATUS_XML})"
+  local RTMP_URL="$(xmllint --xpath '//getplayerstatus/rtmp/url/text()'  "${STATUS_XML}")"
+  local TICKET="$(  xmllint --xpath '//getplayerstatus/rtmp/ticket/text()' "${STATUS_XML}")"
+  local QUES="$(    xmllint --xpath '//getplayerstatus/stream/quesheet/que/text()' "${STATUS_XML}")"
+  echo "${QUES}" > ./ques.txt
+  local CONTENTS="$(echo "${QUES}" | grep -oP '/content[^ ]*\.f4v')"
+  
+  echo "$CONTENTS" | awk '{ printf("rtmpdump -V -r '"'"${RTMP_URL}"'"' -C S:'${TICKET}' -y mp4:%s -o '"'"${TITLE}'.flv'"'"'\n", $1) }'
+}
+
+is_timeshift() {
+  [[ "$1" =~ ^.*live.nicovideo.jp/watch/lv([^?]*).*$ ]]
+}
+
+if is_timeshift ${VIDEO_URL}; then
+  login && print_command_for_timeshift
+else
+  echo >&2 "Unsupported URL: ${VIDEO_URL}"
+  exit 1
+fi
+
