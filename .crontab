@@ -27,8 +27,7 @@ MAILTO="kazuhiko.hrmt@gmail.com"
 * * * * * for i in $(seq 5 15 59); do (sleep $i; $HOME/bin/cron/sorapiyo_notify.sh) & done
 
 # 超!A&G+ ################################ 
-DIR_AGQR=Downloads/agqr
 
 # 徳井青空のまぁるくなぁれ！ (毎週木曜25:00-25:30)
-00 01 * * 5 $HOME/bin/agrec 30 $HOME/$DIR_AGQR/徳井青空のまぁるくなぁれ！/maru.$(date "+\%y\%m\%d").flv
+00 01 * * 5 $HOME/bin/agrec 30 $HOME/Downloads/maru.$(date "+\%y\%m\%d").flv
 
