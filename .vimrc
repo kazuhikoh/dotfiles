@@ -15,12 +15,14 @@ set number
 set ruler
 
 " タブ
-set tabstop=4     " Tab文字表示幅
+set tabstop=2     " Tab文字表示幅
 
 " インデント
+set expandtab   " Tabキーでスペース入力
 "set autoindent " 前行インデント継続
 set smartindent " 少し構文理解してくれる?
 "set indentexpr " スクリプトで設定
+set shiftwidth=2 " vimが挿入するインデントの幅 
 
 " 画面右端の折り返し
 set wrap
