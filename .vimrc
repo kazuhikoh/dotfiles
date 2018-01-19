@@ -100,6 +100,7 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'cohama/lexima.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
