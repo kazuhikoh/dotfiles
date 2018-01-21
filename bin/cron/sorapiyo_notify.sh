@@ -4,11 +4,9 @@ PATH=$PATH:~/bin
 
 to_json() {
   if [ -p /dev/stdin ]; then
-    echo T:$(date) >> ~/Desktop/sorapiyo.log
     local piyo="$(cat -)"
     [ -z ${piyo} ] && exit 1
 
-    echo piyo=$(piyo) >> ~/Desktop/sorapiyo.log
     local date="$(echo "${piyo}" | grep -oP '(?<=^date ).*')"
     local time="$(echo "${piyo}" | grep -oP '(?<=^time ).*')"
     local messages="$(echo "${piyo}" | grep -oP '(?<=^message ).*')"
@@ -29,7 +27,6 @@ EOF
 {
   xsorapiyo -d ~/.sorapiyo \
     | to_json \
-    | tee ~/Desktop/sorapiyo.json \
     | slk -j
 } >/dev/null
 
