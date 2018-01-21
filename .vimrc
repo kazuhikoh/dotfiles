@@ -84,34 +84,42 @@ set statusline+=[%{has('multi_byte')&&\&fileencoding!=''?&fileencoding:&encoding
 "ファイルタイプ表示
 set statusline+=%y
 
-" vim-plug
-" https://github.com/junegunn/vim-plug
+" Plugins (using junegunn/vim-plug)
 " ================================
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+" --------------------------------
 call plug#begin('~/.vim/plugged')
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+" Completion
+" --------------------------------
 Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-Plug 'mhinz/vim-startify'
+Plug 'cohama/lexima.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+" Filer
+" --------------------------------
+Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-let g:NERDTreeShowHiddenFiles=1
+let g:NERDTreeShowHidden=1
 
-" kotlin
-Plug 'udalov/kotlin-vim'
+" Syntax
+" --------------------------------
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
+" kotlin
+Plug 'udalov/kotlin-vim'
+
+" GitHub
+" --------------------------------
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
 " Initialize plugin system
+" --------------------------------
 call plug#end()
 
