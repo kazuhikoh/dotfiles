@@ -222,6 +222,10 @@ if [ -f "${HOME}/etc/.aliasrc.cygwin" ]; then
   source "${HOME}/etc/.aliasrc.cygwin"
 fi
 
+if [ -f "${HOME}/etc/.cygwinrc" ]; then
+  source "${HOME}/etc/.cygwinrc"
+fi
+
 # extra
 if [ -f "${HOME}/etc/.extrarc" ]; then
   source "${HOME}/etc/.extrarc"
