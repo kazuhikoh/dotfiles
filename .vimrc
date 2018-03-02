@@ -104,6 +104,7 @@ Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
+autocmd VimEnter * execute 'NERDTree'
 
 " Syntax
 " --------------------------------
