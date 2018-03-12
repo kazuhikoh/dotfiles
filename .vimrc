@@ -104,9 +104,20 @@ Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
+autocmd VimEnter * execute 'NERDTree'
 
 " Syntax
 " --------------------------------
+
+" markdown
+Plug 'plasticboy/vim-markdown'
+Plug 'kannokanno/previm'
+Plug 'tyru/open-browser.vim'
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+" C^p でプレビュー
+nnoremap <silent><C-p> :PrevimOpen<CR>
+" 折りたたみ無効
+let g:vim_markdown_folding_disabled=1
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
