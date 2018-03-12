@@ -77,7 +77,7 @@ print_command_for_timeshift() {
   echo "${QUES}" > ./ques.txt
   local CONTENTS="$(echo "${QUES}" | grep -oP '/content[^ ]*\.f4v')"
   
-  echo "$CONTENTS" | awk '{ printf("rtmpdump -V -r '"'"${RTMP_URL}"'"' -C S:'${TICKET}' -y mp4:%s -o '"'"${TITLE}'.flv'"'"'\n", $1) }'
+  echo "$CONTENTS" | awk '{ printf("rtmpdump -V -r '"'"${RTMP_URL}"'"' -C S:'${TICKET}' -y mp4:%s -o '"'""${TITLE}"'.flv'"'"'\n", $1) }'
 }
 
 is_timeshift() {
