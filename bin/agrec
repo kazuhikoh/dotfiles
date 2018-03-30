@@ -61,7 +61,7 @@ done
 readonly DURATION=$(($1 * 60)) # min -> sec
 readonly OUT_PATH="$2"
 
-readonly RTMP_URL="rtmp://fms-base2.mitene.ad.jp/agqr/aandg22"
+readonly RTMP_URL="rtmp://fms-base2.mitene.ad.jp/agqr/aandg2"
 
 # create output directory
 readonly OUT_DIR=$(dirname "${OUT_PATH}")
