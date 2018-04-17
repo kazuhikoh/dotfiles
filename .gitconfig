@@ -12,6 +12,8 @@
 	autoCRLF = false
 	preloadindex = true
 	fscache = true
+[pager]
+  branch = false
 [merge]
 	ff = false
 [pull]
