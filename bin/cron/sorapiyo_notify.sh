@@ -13,7 +13,7 @@ to_json() {
     local images="$(echo "${piyo}"   | grep -oP '(?<=^image ).*' | awk 'NF > 0 {printf("{\"image_url\": \"%s\"}", $0)}' | paste -s -d,)"
     cat <<EOF
 {
-  "channel": "#1091",
+  "channel": "#sorapiyo",
   "username": "そらぴよ⊂(＾ω＾)⊃",
   "text": "${messages}\n<http://piyo.fc2.com/soramaru/|${date} ${time}>",
   "attachments": [
@@ -27,6 +27,6 @@ EOF
 {
   xsorapiyo -d ~/.sorapiyo \
     | to_json \
-    | slk -j
+    | slk -w 1091 -j
 } >/dev/null
 
