@@ -25,11 +25,11 @@ do
   case $opts in
   h)
     usage
-	exit 0
-	;;
+  exit 0
+  ;;
   d)
     DIFF_FILEPATH="$OPTARG"
-	;;
+  ;;
   \?)
     exit 1
   esac
@@ -72,15 +72,15 @@ print() {
   echo "$MESSAGE" | awk 'NF > 0 {printf("message %s\n", $0)}'
   
   if [ ! -z "$IMAGE_THUMB_URL" ]; then
-	echo "$IMAGE_THUMB_URL" | awk 'NF > 0 {printf("thumb %s\n", $0)}'
+    echo "$IMAGE_THUMB_URL" | awk 'NF > 0 {printf("thumb %s\n", $0)}'
   fi
   
   if [ ! -z "$IMAGE_URL" ]; then 
-	echo "$IMAGE_URL" | awk 'NF > 0 {printf("image %s\n", $0)}'
+    echo "$IMAGE_URL" | awk 'NF > 0 {printf("image %s\n", $0)}'
   fi
   
   if [ ! -z "$ANCHOR_HREFS" ]; then
-	echo "$ANCHOR_HREFS" | awk 'NF > 0 {printf("link %s\n", $0)}'
+    echo "$ANCHOR_HREFS" | awk 'NF > 0 {printf("link %s\n", $0)}'
   fi
 }
 
@@ -90,14 +90,13 @@ if [ ! -z "${DIFF_FILEPATH}" ]; then
   print > "${TMP_FILEPATH}"
 
   if diff -q "${DIFF_FILEPATH}" "${TMP_FILEPATH}" >/dev/null 2>&1; then
-  	rm "${TMP_FILEPATH}"
-	exit 1
+    rm "${TMP_FILEPATH}"
+    exit 1
   else
-  	mv "${TMP_FILEPATH}" "${DIFF_FILEPATH}"
-  	cat "${DIFF_FILEPATH}"
-	exit 0
+    mv "${TMP_FILEPATH}" "${DIFF_FILEPATH}"
+    cat "${DIFF_FILEPATH}"
+    exit 0
   fi
 fi
 
 print
-
