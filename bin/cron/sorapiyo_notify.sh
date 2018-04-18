@@ -2,6 +2,9 @@
 
 PATH=$PATH:~/bin
 
+readonly SLACK_WEBHOOK_ID="$1"
+readonly SLACK_CHANNEL="$2"
+
 to_json() {
   if [ -p /dev/stdin ]; then
     local piyo="$(cat -)"
@@ -13,7 +16,7 @@ to_json() {
     local images="$(echo "${piyo}"   | grep -oP '(?<=^image ).*' | awk 'NF > 0 {printf("{\"image_url\": \"%s\"}", $0)}' | paste -s -d,)"
     cat <<EOF
 {
-  "channel": "#sorapiyo",
+  "channel": "${SLACK_CHANNEL}",
   "username": "そらぴよ⊂(＾ω＾)⊃",
   "text": "${messages}\n<http://piyo.fc2.com/soramaru/|${date} ${time}>",
   "attachments": [
@@ -27,6 +30,6 @@ EOF
 {
   xsorapiyo -d ~/.sorapiyo \
     | to_json \
-    | slk -w 1091 -j
+    | slk -w "${SLACK_WEBHOOK_ID}" -j
 } >/dev/null
 
