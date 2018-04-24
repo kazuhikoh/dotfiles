@@ -24,7 +24,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 MAILTO="kazuhiko.hrmt@gmail.com"
 
 # そらぴよ
-# * * * * * for i in $(seq 5 15 59); do (sleep $i; $HOME/bin/cron/sorapiyo_notify.sh 1091 sorapiyo) & done
+# * * * * * for i in $(seq 5 15 59); do (sleep $i; $HOME/bin/cron/sorapiyo_notify.sh) & done
 
 # 超!A&G+ ################################ 
 

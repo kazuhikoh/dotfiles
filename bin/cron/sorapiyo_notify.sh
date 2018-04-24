@@ -1,11 +1,11 @@
 #!/bin/bash
+set -x
 
 PATH=$PATH:~/bin
 
-readonly SLACK_WEBHOOK_ID="$1"
-readonly SLACK_CHANNEL="$2"
-
 to_json() {
+  readonly SLACK_CHANNEL="$1"
+
   if [ -p /dev/stdin ]; then
     local piyo="$(cat -)"
     [ -z ${piyo} ] && exit 1
@@ -28,8 +28,9 @@ EOF
 }
 
 {
-  xsorapiyo -d ~/.sorapiyo \
-    | to_json \
-    | slk -w "${SLACK_WEBHOOK_ID}" -j
+  diff="$(xsorapiyo -d ~/.sorapiyo)"
+  echo "$diff" | to_json general  | slk -w 1091 -j
+  echo "$diff" | to_json sorapiyo | slk -w 1091 -j
+  echo "$diff" | to_json 1091     | slk -w home -j
 } >/dev/null
 
