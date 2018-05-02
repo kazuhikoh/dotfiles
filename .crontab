@@ -29,4 +29,4 @@ MAILTO="kazuhiko.hrmt@gmail.com"
 # 超!A&G+ ################################ 
 
 # 徳井青空のまぁるくなぁれ！ (毎週木曜25:00-25:30)
-00 01 * * 5 $HOME/bin/cron/record_marunare.sh home 1091
+00 01 * * 5 $HOME/bin/cron/record_agqr_maru.sh home 1091
