@@ -77,12 +77,22 @@ rtmpdump --rtmp ${RTMP_URL} --live --stop "${DURATION}" -o "${OUT_PATH}" >$LOG 2
   exit 1
 }
 
+# filesize & fullpath
+msg=$(cd "$OUT_DIR"; du -b "$(pwd)/${OUT_PATH##*/}")
+msg=$(echo $msg) # tab --> space
+
+# if file is empty, exit with error
+readonly filesize=${msg%% *}
+if [[ "$filesize" = 0 ]]; then
+  {
+    echo 'ERROR: no data is captured.'
+    echo "$msg"
+  } >&2
+  exit 1
+fi
+
 # result
-(
-  cd $OUT_DIR
-  pwd
-  ls -alh ${OUT_PATH##*/}
-)
+echo "$msg"
 
 # finalize
 trap "
