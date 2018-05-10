@@ -106,6 +106,8 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
 autocmd VimEnter * execute 'NERDTree'
 
+Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 " Syntax
 " --------------------------------
 
