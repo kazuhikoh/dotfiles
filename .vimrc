@@ -108,6 +108,7 @@ autocmd VimEnter * execute 'NERDTree'
 
 Plug 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
+
 " Syntax
 " --------------------------------
 
@@ -123,6 +124,7 @@ let g:vim_markdown_folding_disabled=1
 
 " golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+autocmd BufNewFile,BufRead *.go nmap <F9> :GoBuild<CR>
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " kotlin
