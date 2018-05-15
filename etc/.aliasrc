@@ -6,3 +6,5 @@ alias l='ls -CF --color=auto'
 alias h='history'
 
 alias grep="grep --color=auto"
+
+alias v='vim'
