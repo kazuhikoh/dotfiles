@@ -51,6 +51,11 @@ if [ -f "${HOME}/etc/.aliasrc" ]; then
   source "${HOME}/etc/.aliasrc"
 fi
 
+# function
+if [ -f "${HOME}/etc/.funcrc.zsh" ]; then
+  source "${HOME}/etc/.funcrc.zsh"
+fi
+
 # colors
 if [ -f "${HOME}/etc/.colorrc" ]; then
   source "${HOME}/etc/.colorrc"
