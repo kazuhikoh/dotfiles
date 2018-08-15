@@ -1,0 +1,64 @@
+# Impl
+# ✨ :sparkles: add feature
+# 🚧 :construction: WIP(Work In Progress)
+# 🎨 :art: update UI / styles
+# ♻️ :recycle: refactor
+# 🔊 :loud_sound: Adding logs.
+# 🔇 :mute: Removing logs.
+# 🔧 :wrench: Changing configuration files.
+# 🍱 :bento: Adding or updating assets.
+# 🚚 :truck: Moving or renaming files.
+# 🗑️ :wastebasket: remove code or file
+# 💥 :boom: Introducing breaking changes.
+
+# Improvemnt
+# 🔒 :lock: security
+# 🌐 :globe_with_meridians: i18n or l10n.
+# 🐎 :horse: improve performance
+# 🚸 :children_crossing: improve user experience / usability
+# ♿️ :wheelchair: improve accessibility
+# 💩 :hankey: Writing bad code that needs to be improved
+
+# Fix
+# 🐛 :bug: fix bug
+# 🚑 :ambulance: fix cretical bug
+# 👌 :ok_hand: Updating code due to code review changes.
+# 🐧 :penguin: Fixing something on Linux.
+# 🍎 :apple: Fixing something on macOS.
+# 🏁 :checkered_flag: Fixing something on Windows.
+# 🤖 :robot: Fixing something on Android.
+# 🍏 :green_apple: Fixing something on iOS.
+
+# Testing
+# ✅ :white_check_mark: add test
+# 🚨 :rotating_light: remove linter warnings.
+
+# Dependency
+# ➕ :heavy_plus_sign: Adding a dependency.
+# ➖ :heavy_minus_sign: Removing a dependency.
+# ⬆️ :arrow_up: Upgrading dependencies.
+# ⬇️ :arrow_down: Downgrading dependencies.
+# 📌 :pushpin: Pinning dependencies to specific versions.
+# 👽 :alien: Updating code due to external API changes.
+
+# Build
+# 💚 :green_heart: Fixing CI Build.
+# 👷 :construction_worker: Adding CI build system.
+# 🐳 :whale: Work about Docker.
+
+# Documentation
+# 📝 :memo: README
+# 💡 :bulb: Documenting source code.
+# 📸 :camera_flash: Adding or updating snapshots.
+
+# Repository
+# 🎉 :tada:
+# 🙈 :see_no_evil: Adding or updating a .gitignore file.
+# ⏪ :rewind: Reverting changes.
+# 🔀 :twisted_rightwards_arrows: Merging branches.
+# 📦 :package: Updating compiled files or packages.
+# 🔖 :bookmark: vX.X.X
+
+# :)
+# 🍻 :beers: Writing code drunkenly.
+# 🥚 :egg: Adding an easter egg.

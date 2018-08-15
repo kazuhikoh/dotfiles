@@ -15,8 +15,9 @@
 
 These are read by (.bashrc|.zshrc).
 
-|filename|description|
+|:page_facing_up:|is|
 |:-------|:----------|
-|.envrc   |Define environment variables|
-|.aliasrc |Define aliases|
-|.colorrc |Define colorization (dircolors)|
+|.envrc*   |Define environment variables|
+|.aliasrc* |Define aliases|
+|.funcrc*  |Define functions|
+|.colorrc  |Define colorization (dircolors)|
