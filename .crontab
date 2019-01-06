@@ -33,3 +33,8 @@ MAILTO="kazuhiko.hrmt@gmail.com"
 
 # 徳井青空のまぁるくなぁれ！ (毎週木曜25:00-25:30)
 00 01 * * 5 $HOME/bin/cron/record_agqr_maru.sh home log
+
+# HiBiKi Radio Station ###################
+
+# 徳井青空のまぁるくなぁれ！ (毎週金曜12:00頃)
+00 13 * * 5 $HOME/bin/cron/download_hibikiradio_marunare.sh home log
