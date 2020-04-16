@@ -231,3 +231,5 @@ if [ -f "${HOME}/etc/.extrarc" ]; then
   source "${HOME}/etc/.extrarc"
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

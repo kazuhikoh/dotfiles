@@ -148,3 +148,4 @@ if [[ -f ~/${ZPLUG_HOME}/init.zsh ]]; then
 	fi
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
