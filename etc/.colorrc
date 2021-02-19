@@ -1,5 +1,0 @@
-# dir_colors
-if type -p dircolors >/dev/null ; then
-    eval $(dircolors ~/.dir_colors)
-fi
-

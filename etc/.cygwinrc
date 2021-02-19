@@ -1,4 +1,0 @@
-if [[ "$(uname -o)" == Cygwin ]] ; then
-  # Solarized
-  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
-fi

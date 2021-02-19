@@ -28,6 +28,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
+
 # prompt theme
 #autoload -Uz promptinit
 #promptinit
@@ -73,53 +74,103 @@ RPROMPT='$(rprompt-git-current-branch)'
 
 ################################
 
+# User Command
+export PATH=$PATH:~/bin
+
+################################
+
 export LANG=ja_JP.UTF-8
 
-# env
-if [ -f "${HOME}/etc/.envrc" ]; then
-  source "${HOME}/etc/.envrc"
-fi
+export PAGER=less
+export LESS='-iNMRj.5'
 
-# alias
-if [ -f "${HOME}/etc/.aliasrc" ]; then
-  source "${HOME}/etc/.aliasrc"
-fi
+export EDITOR=vim
+export GIT_EDITOR=vim
 
-# function
-if [ -f "${HOME}/etc/.funcrc.zsh" ]; then
-  source "${HOME}/etc/.funcrc.zsh"
-fi
+# alias ###############################
 
-# colors
-if [ -f "${HOME}/etc/.colorrc" ]; then
-  source "${HOME}/etc/.colorrc"
-fi
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias l='ls -a1 --color=auto'
 
-# cygwin
-if [ -f "${HOME}/etc/.aliasrc.cygwin" ]; then
-  source "${HOME}/etc/.aliasrc.cygwin"
-fi
+alias h='history'
 
-if [ -f "${HOME}/etc/.cygwinrc" ]; then
-  source "${HOME}/etc/.cygwinrc"
-fi
+alias grep="grep --color=auto"
 
-# extra
-if [ -f "${HOME}/etc/.extrarc" ]; then
-  source "${HOME}/etc/.extrarc"
-fi
+alias v='vim'
 
-# Zsh Widgets ###############################
+# For Cygwin
+if [[ "$(uname -o)" == Cygwin ]] ; then
 
-function ghqlist () {
-	local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
-	if [ -n "$selected_dir" ]; then
-		BUFFER="cd ${selected_dir}"
-		zle accept-line
-	fi
+  alias m="mintty.exe --daemon"
+  alias s=cygstart
+
+  alias desktop="cd $(cygpath --desktop); pwd"
+  alias home="cd $(cygpath --home)/$USER; pwd"
+  
+  # kill windows process
+  # ("ps -W" lists windows processes.)
+  alias wkill='taskkill /F /pid $@'
+  
+  # sudo
+  if [[ -n "$PS1" ]]; then
+      cygsudo() {
+          local executable=$(which "${1:-cmd}")
+          shift
+          /usr/bin/cygstart --action=runas "$executable" "$@"
+      }
+  
+      if [[ -x "/usr/bin/cygstart" ]]; then
+          alias sudo=cygsudo
+      fi
+  fi
+
+fi  
+
+# function ###############################
+
+# fenc <from> <to> <filepath>
+fenc() {
+  if ! type vim > /dev/null; then
+    echo "Vim is our help and shield."
+    exit 1;
+  fi
+
+  local from="$1"
+  local to="$2"
+  local filepath="$3"
+  : ${from:?} ${to:?} ${filepath:?}
+
+  vim -c ":e ++enc=${from}" -c "set fenc=${to}" -c ":wq" "$filepath"
 }
-zle -N ghqlist
-bindkey '^]' ghqlist
+
+# ff <file-format>
+ff() {
+  if ! type vim > /dev/null; then
+    echo "Vim is our help and shield."
+    exit 1;
+  fi
+
+  local format="$1"
+  local filepath="$2"
+  : ${format:?} ${filepath:?}
+
+  vim -c ":set ff=${format}" -c ":wq" "$filepath"
+}
+
+# style ###############################
+
+# dir_colors
+if type -p dircolors >/dev/null ; then
+    eval $(dircolors ~/.dir_colors)
+fi
+
+# theme (Cygwin)
+
+if [[ "$(uname -o)" == Cygwin ]] ; then
+  # Solarized
+  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
+fi
 
 # Plugin Manager #############################
 
@@ -153,4 +204,77 @@ else
 	fi
 fi
 
+# Zsh Widgets ###############################
+
+function ghqlist () {
+	local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
+	if [ -n "$selected_dir" ]; then
+		BUFFER="cd ${selected_dir}"
+		zle accept-line
+	fi
+}
+zle -N ghqlist
+bindkey '^]' ghqlist
+
+# dev ###############################
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# golang
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
+
+## syndbg/goenv
+export GOENV_ROOT="$HOME/go/src/github.com/syndbg/goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+
+if [ -d "$GOENV_ROOT" ]; then
+  eval "$(goenv init -)"
+else
+  echo "Please clone syndbg/goenv to $GOENV_ROOT" >&2
+fi
+
+# Python
+
+# pyenv/pyenv
+export PYENV_ROOT="$HOME/go/github.com/pyenv/pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+if [ -d "$PYENV_ROOT" ]; then
+  eval "$(pyenv init -)"
+else
+  echo "Please clone pyenv/pyenv to $PYENV_ROOT"
+fi
+
+# Java
+
+# jenv (http://www.jenv.be/)
+# Java environment manager
+if [[ -d $HOME/.jenv/bin ]]; then
+  export PATH="$HOME/.jenv/bin:$PATH"
+  eval "$(jenv init -)"
+else
+  echo "Please clone gcuisinier/jenv to ~/.jenv" >&2
+fi
+
+# sdkman (sdkman.io)
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="${HOME}/.sdkman"
+[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+
+# Node.js
+
+# nodebrew (https://github.com/hokaccha/nodebrew)
+# Node.js version manager
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# Android
+
+if [[ "$(uname)" == 'Darwin' ]]; then
+  export PATH="$HOME/Library/Android/sdk/platform-tools":$PATH
+fi
+

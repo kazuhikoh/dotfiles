@@ -1,1 +1,0 @@
-git --no-pager log --pretty=format:'%an %ad %s%' --date=format:'%y%m%d' | grep $(date '+%y%m%d') | grep $(git config user.name) | grep -v Merge | awk '{ $1=""; $2=""; print; }' | sed -e 's/^ *//g' | tac 
