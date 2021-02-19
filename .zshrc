@@ -73,6 +73,8 @@ RPROMPT='$(rprompt-git-current-branch)'
 
 ################################
 
+export LANG=ja_JP.UTF-8
+
 # env
 if [ -f "${HOME}/etc/.envrc" ]; then
   source "${HOME}/etc/.envrc"
