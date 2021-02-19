@@ -124,8 +124,13 @@ bindkey '^]' ghqlist
 # zplug [https://github.com/zplug/zplug]
 # - Zsh Plugin Manager
 export ZPLUG_HOME=~/.zplug
-if [[ -f ~/${ZPLUG_HOME}/init.zsh ]]; then
+if [[ ! -f ${ZPLUG_HOME}/init.zsh ]]; then
+  echo "NOT INSTALLED: zplug/zplug (https://github.com/zplug/zplug)"
+else
 	source ~/.zplug/init.zsh
+
+	zplug "b4b4r07/enhancd", use:init.sh
+	zplug "zdharma/fast-syntax-highlighting"
 
 	# zplug check returns true if all packages are installed
 	# Therefore, when it returns false, run zplug install
@@ -135,8 +140,6 @@ if [[ -f ~/${ZPLUG_HOME}/init.zsh ]]; then
 			echo; zplug install
 		fi
 	fi
-
-	zplug "b4b4r07/enhancd", use:init.sh
 	
 	# source plugins and add commands to the PATH
 	zplug load
