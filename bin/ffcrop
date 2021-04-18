@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# DEPENDENCIES ################################
+
+if [ ! type ffmpeg >/dev/null 2>&1  ]; then
+  echo 'ffmpeg not found!' >&2
+  exit 1
+fi 
+
+# FUNCTIONS ################################
+
+# 00:00:00 -> seconds
+function toSeconds() {
+  local input=$1
+
+  local arr=($(echo $input | tr ':' ' '))
+  local h=$(( ${arr[0]} * 3600 ))
+  local m=$(( ${arr[1]} * 60 ))
+  local s=$(( ${arr[2]} * 1 ))
+
+  local seconds=$(( h + m + s ))
+  echo $seconds
+}
+
+# seconds -> 00:00:00
+function toString() {
+  local input=$1
+
+  local h=00$(( $input / 3600 ))
+  local m=00$(( $input % 3600 / 60 ))
+  local s=00$(( $input % 3600 % 60 ))
+
+  echo "${h: -2}:${m: -2}:${s: -2}"
+}
+
+# EXECUTE ################################
+
+readonly INPUT="$1"
+readonly TIME1="$2"
+readonly TIME2="$3"
+readonly OUTPUT="$4"
+
+[ -e "$INPUT" ] || {
+  echo Invalid parameter '$1' "file not found. (${INPUT})"
+  exit 1
+} >&2
+
+[[ "$TIME1" =~ [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ]] || {
+  echo Invalid parameter: '$2' "should be hh:mm:ss. (${TIME1})"
+  exit 1
+} >&2
+
+[[ "$TIME2" =~ [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ]] || {
+  echo Invalid parameter: '$3' "should be hh:mm:ss. (${TIME2})"
+  exit 1
+} >&2
+
+
+sec1=$(toSeconds $TIME1)
+sec2=$(toSeconds $TIME2)
+secDiff=$(( $sec2 - $sec1 )) 
+
+[ $secDiff -gt 0 ] || {
+  echo Invalid parameter: "TO < FROM"
+  exit 1
+}
+
+readonly DURATION=$(toString $secDiff)
+
+ffmpeg -ss $TIME1 -i "$INPUT" -t $DURATION -c copy "$OUTPUT"
+
