@@ -5,6 +5,8 @@
 	st = status
 	br = branch
 	co = checkout
+	coo = !git branch | fzf | xargs git checkout
+	up = !git push -u origin HEAD
 	cl = clean
 	log = log --graph --decorate
 [core]
