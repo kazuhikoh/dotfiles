@@ -99,6 +99,19 @@ alias grep="grep --color=auto"
 
 alias v='vim'
 
+# For Mac
+{
+  # GNU tools
+  if [[ -e "/usr/local/opt/coreutils/libexec/gnubin"  ]]; then
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+  fi
+  if [[ -e "/usr/local/opt/grep/libexec/gnubin"  ]]; then
+    PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+    MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+  fi
+}
+
 # For Cygwin
 if [[ "$(uname -o)" == Cygwin ]] ; then
 
