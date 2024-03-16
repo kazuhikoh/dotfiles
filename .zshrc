@@ -1,4 +1,52 @@
+export LANG=ja_JP.UTF-8
+
+################################# 
+# Check OS
+################################# 
+
+function get-os-name {
+  case $(uname -s) in
+    Linux*)  echo 'Linux' ;;
+    Darwin*) echo 'MacOS' ;;
+    MINGW*)  echo 'Windows' ;;
+    *)       echo 'Unknown' ;;
+  esac
+}
+OS_NAME=$(get-os-name)
+
+################################# 
+# Key Binding
+################################# 
+
+# vim-like style
 bindkey -v
+
+# Disable keymaps
+bindkey -r '^T' 
+
+# Ctrl-P: EOF (to accept zsh-autosuggestions)
+bindkey -M viins '^P' end-of-line
+
+################################# 
+# Colors
+################################# 
+
+autoload -Uz colors && colors
+
+# Sample
+# fg: for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15  ] && echo;done; echo 
+# bg: for c in {000..255}; do echo -n "\e[30;48;5;${c}m $c\e[0m" ; [ $(($c%16)) -eq 15   ] && echo;done; echo
+
+################################# 
+# Suggestion
+################################# 
+
+# zsh-autosuggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+################################# 
+# Completion
+################################# 
 
 autoload -Uz compinit
 
@@ -21,6 +69,8 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+zstyle ":completion:*:commands" rehash 1
+
 compinit
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
@@ -28,58 +78,171 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
+# Disable zsh builtin commands 
+disable r
+
+################################# 
+# Prompt
+################################# 
 
 # prompt theme
 #autoload -Uz promptinit
 #promptinit
 #prompt adam1
 
-# prompt
+function print-breadcrumb {
+  local text=$1
+  local fgcolor=$2
+  local bgcolor=$3
+  local nextcolor="$4"
 
-function rprompt-git-current-branch {
-  local branch_name st branch_status
+  local arrow='\ue0b0' # nf-pl-left_hard_divider
 
+  local part_text="%F{$fgcolor}%K{$bgcolor}$text%f%k"
+  local part_arrow 
+  if [[ $nextcolor == '' ]]; then
+    part_arrow="%F{$bgcolor}$arrow%f"
+  else
+    part_arrow="%F{$bgcolor}%K{$nextcolor}$arrow%f%k"
+  fi
+
+  echo "${part_text}${part_arrow}"
+}
+
+function print-os-breadcrumb {
+  local nextcolor=$1
+
+  local os_icon
+  case $OS_NAME in
+    Linux) os_icon='\ue712' ;;
+    MacOS) os_icon='\ue711' ;;
+    Windows) os_icon='\ue70f' ;;
+    *) echo "?" ;;
+  esac
+
+  local fgcolor=255 # white
+  local bgcolor=003 # yellow
+
+  echo "$(print-breadcrumb " $os_icon " $fgcolor $bgcolor $nextcolor)"
+}
+
+function print-badge {
+  local text="$1"
+  local fgcolor=$2
+  local bgcolor=$3
+
+  local c_round_l='\ue0b6' # nf-ple-left_half_circle_thick
+  local c_round_r='\ue0b4' # nf-ple-right_half_circle_thick
+
+  local t1="%F{$bgcolor}$c_round_l%f"
+  local t2="%F{$fgcolor}%K{$bgcolor}$text%f%k"
+  local t3="%F{$bgcolor}$c_round_r%f"
+  echo "${t1}${t2}${t3}"
+}
+
+function get-git-info {
   if [ ! -e ".git" ]; then
     return
   fi
 
-  branch_name=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-  st=$(git status 2> /dev/null)
+  local branch_name=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+  local branch_status
+
+  local st=$(git status 2> /dev/null)
 
   if [[ -n $(echo "$st" | grep "^nothing to") ]]; then
-    branch_status="%F{green}"
+    branch_status="clean"
   elif [[ -n $(echo "$st" | grep "^Untracked files") ]]; then
-    branch_status="%F{red}?"
+    branch_status="has_untracked"
   elif [[ -n $(echo "$st" | grep "^Changes not staged for commit") ]]; then
-    branch_status="%F{red}+"
+    branch_status="has_not_staged"
   elif [[ -n $(echo "$st" | grep "^Changes to be committed") ]]; then
-    branch_status="%F{yellow}!"
+    branch_status="staged"
   elif [[ -n $(echo "$st" | grep "^rebase in progress") ]]; then
-    echo "%F{red}!(no branch)"
-    return
+    branch_status="rebase"
   else
-    branch_status="%F{blue}"
+    branch_status=""
   fi
 
-  echo "${branch_status}[$branch_name]"
+  echo -n "$branch_name $branch_status"
+}
+
+function print-git-badge {
+  local arr=( $(get-git-info) )
+  local git_branch=${arr[1]}
+  local git_status=${arr[2]}
+
+  if [[ "$git_branch" == '' ]]; then
+    return
+  fi
+
+  local t_icon='\ue725'    # nf-dev-git_branch
+  local t_branch="$git_branch"
+  local t_status=$(
+    case "$git_status" in
+      clean)          echo "" ;;
+      has_untracked)  echo "|?" ;;
+      has_not_staged) echo "|+" ;;
+      has_staged)     echo "|!" ;;
+      *) echo "" ;
+    esac
+  )
+
+  local fgcolor=255 # white
+  local bgcolor=003 # yellow
+
+  echo "$(print-badge "${t_icon} ${t_branch}${t_status}" $fgcolor $bgcolor)"
+}
+
+function print-prompt {
+  local exitcode=$?
+  
+  # [os-icon > directory > 
+  
+  local t_os="$(print-os-breadcrumb)"
+
+  local t_face
+  if [[ $exitcode == 0 ]]; then
+    t_face="${fg[yellow]}(⊃＾ω＾)⊃${reset_color} "
+  else
+    t_face="${fg[red]}(⊃＾ω＾)⊃${reset_color} "
+  fi
+
+  echo "${t_os}${t_face}" 
+}
+
+function print-rprompt {
+  local exitcode=$?
+  local exitcode_icon='\uf06a' # nf-fa-exclamation_circle
+  local exitcode_badge=$(
+    if [[ $exitcode != 0 ]]; then
+      print-badge "$exitcode_icon $exitcode" 255 009
+    fi 
+  )
+
+  echo "${exitcode_badge}$(print-git-badge)"
 }
 
 setopt prompt_subst
-
-PROMPT='%(?.%F{yellow}(⊃＾ω＾)⊃%f.%F{red}(⊃＾ω＾%)⊃%f) '
-RPROMPT='$(rprompt-git-current-branch)'
-
+PROMPT='$(print-prompt)'
+RPROMPT='$(print-rprompt)'
 #PROMPT2=
 #SPROMPT=
 
-################################
+# #############################
+# Hook functions
+# #############################
 
+chpwd() {
+  # iTerm2 tab name
+  echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
+}
+
+################################
 # User Command
+################################# 
+
 export PATH=$PATH:~/bin
-
-################################
-
-export LANG=ja_JP.UTF-8
 
 export PAGER=less
 export LESS='-iNMRj.5'
@@ -87,17 +250,23 @@ export LESS='-iNMRj.5'
 export EDITOR=vim
 export GIT_EDITOR=vim
 
-# alias ###############################
+################################# 
+# Alias
+################################# 
 
-alias ls='ls --color=auto'
+alias l='ls --color=auto'
 alias ll='ls -alF --color=auto'
-alias l='ls -a1 --color=auto'
+alias l1='ls -a1 --color=auto'
+
+alias d='cd "./$(ls -d1 */ | fzf)"'
 
 alias h='history'
 
 alias grep="grep --color=auto"
 
 alias v='vim'
+
+
 
 # For Mac
 {
@@ -180,7 +349,7 @@ fi
 
 # theme (Cygwin)
 
-if [[ "$(uname -o)" == Cygwin ]] ; then
+if [[ $OS_NAME == Windows ]] ; then
   # Solarized
   source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
 fi
