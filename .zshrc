@@ -201,12 +201,13 @@ function print-prompt {
   
   local t_os="$(print-os-breadcrumb)"
 
-  local t_face
+  local t_color
   if [[ $exitcode == 0 ]]; then
-    t_face="${fg[yellow]}(⊃＾ω＾)⊃${reset_color} "
+    t_color=003
   else
-    t_face="${fg[red]}(⊃＾ω＾)⊃${reset_color} "
+    t_color=001
   fi
+  local t_face="%F{$t_color}(⊃＾ω＾)⊃ %f"
 
   echo "${t_os}${t_face}" 
 }
@@ -279,10 +280,15 @@ alias v='vim'
     PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
     MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
   fi
+
+  if [[ "$OS_NAME" == MacOS ]]; then
+    alias lsusb='system_profiler SPUSBDataType'
+    alias p='pbpaste'
+  fi
 }
 
-# For Cygwin
-if [[ "$(uname -o)" == Cygwin ]] ; then
+# For Windows
+if [[ $OS_NAME == Windows ]] ; then
 
   alias m="mintty.exe --daemon"
   alias s=cygstart
