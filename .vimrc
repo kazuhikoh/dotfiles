@@ -7,6 +7,11 @@ set fileformats=unix,dos,mac
 " 文字列検索ハイライト
 set hlsearch
 
+" Color Scheme
+syntax enable
+set background=light
+colorscheme solarized
+
 " Editor
 " ================================
 
