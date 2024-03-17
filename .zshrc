@@ -1,8 +1,8 @@
 export LANG=ja_JP.UTF-8
 
-################################# 
+# ================================ 
 # Check OS
-################################# 
+# ================================ 
 
 function get-os-name {
   case $(uname -s) in
@@ -14,9 +14,9 @@ function get-os-name {
 }
 OS_NAME=$(get-os-name)
 
-################################# 
+# ================================ 
 # Key Binding
-################################# 
+# ================================ 
 
 # vim-like style
 bindkey -v
@@ -27,9 +27,9 @@ bindkey -r '^T'
 # Ctrl-P: EOF (to accept zsh-autosuggestions)
 bindkey -M viins '^P' end-of-line
 
-################################# 
+# ================================ 
 # Colors
-################################# 
+# ================================ 
 
 autoload -Uz colors && colors
 
@@ -37,16 +37,25 @@ autoload -Uz colors && colors
 # fg: for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15  ] && echo;done; echo 
 # bg: for c in {000..255}; do echo -n "\e[30;48;5;${c}m $c\e[0m" ; [ $(($c%16)) -eq 15   ] && echo;done; echo
 
-################################# 
+if type -p dircolors >/dev/null ; then
+    eval $(dircolors ~/.dir_colors)
+fi
+
+[[ $OS_NAME == Windows ]] && {
+  # Solarized
+  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
+}
+
+# ================================ 
 # Suggestion
-################################# 
+# ================================ 
 
 # zsh-autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-################################# 
+# ================================ 
 # Completion
-################################# 
+# ================================ 
 
 autoload -Uz compinit
 
@@ -81,9 +90,9 @@ HISTFILE=~/.zsh_history
 # Disable zsh builtin commands 
 disable r
 
-################################# 
+# ================================ 
 # Prompt
-################################# 
+# ================================ 
 
 # prompt theme
 #autoload -Uz promptinit
@@ -230,137 +239,18 @@ RPROMPT='$(print-rprompt)'
 #PROMPT2=
 #SPROMPT=
 
-# #############################
-# Hook functions
-# #############################
+# ================================ 
+# Zsh Hook Functions
+# ================================ 
 
 chpwd() {
   # iTerm2 tab name
   echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
 }
 
-################################
-# User Command
-################################# 
-
-export PATH=$PATH:~/bin
-
-export PAGER=less
-export LESS='-iNMRj.5'
-
-export EDITOR=vim
-export GIT_EDITOR=vim
-
-################################# 
-# Alias
-################################# 
-
-alias l='ls --color=auto'
-alias ll='ls -alF --color=auto'
-alias l1='ls -a1 --color=auto'
-
-alias d='cd "./$(ls -d1 */ | fzf)"'
-
-alias h='history'
-
-alias grep="grep --color=auto"
-
-alias v='vim'
-
-
-
-# For Mac
-{
-  # GNU tools
-  if [[ -e "/usr/local/opt/coreutils/libexec/gnubin"  ]]; then
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-  fi
-  if [[ -e "/usr/local/opt/grep/libexec/gnubin"  ]]; then
-    PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-    MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
-  fi
-
-  if [[ "$OS_NAME" == MacOS ]]; then
-    alias lsusb='system_profiler SPUSBDataType'
-    alias p='pbpaste'
-  fi
-}
-
-# For Windows
-if [[ $OS_NAME == Windows ]] ; then
-
-  alias m="mintty.exe --daemon"
-  alias s=cygstart
-
-  alias desktop="cd $(cygpath --desktop); pwd"
-  alias home="cd $(cygpath --home)/$USER; pwd"
-  
-  # kill windows process
-  # ("ps -W" lists windows processes.)
-  alias wkill='taskkill /F /pid $@'
-  
-  # sudo
-  if [[ -n "$PS1" ]]; then
-      cygsudo() {
-          local executable=$(which "${1:-cmd}")
-          shift
-          /usr/bin/cygstart --action=runas "$executable" "$@"
-      }
-  
-      if [[ -x "/usr/bin/cygstart" ]]; then
-          alias sudo=cygsudo
-      fi
-  fi
-
-fi  
-
-# function ###############################
-
-# fenc <from> <to> <filepath>
-fenc() {
-  if ! type vim > /dev/null; then
-    echo "Vim is our help and shield."
-    exit 1;
-  fi
-
-  local from="$1"
-  local to="$2"
-  local filepath="$3"
-  : ${from:?} ${to:?} ${filepath:?}
-
-  vim -c ":e ++enc=${from}" -c "set fenc=${to}" -c ":wq" "$filepath"
-}
-
-# ff <file-format>
-ff() {
-  if ! type vim > /dev/null; then
-    echo "Vim is our help and shield."
-    exit 1;
-  fi
-
-  local format="$1"
-  local filepath="$2"
-  : ${format:?} ${filepath:?}
-
-  vim -c ":set ff=${format}" -c ":wq" "$filepath"
-}
-
-# style ###############################
-
-# dir_colors
-if type -p dircolors >/dev/null ; then
-    eval $(dircolors ~/.dir_colors)
-fi
-
-# theme (Cygwin)
-
-if [[ $OS_NAME == Windows ]] ; then
-  # Solarized
-  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
-fi
-
-# Plugin Manager #############################
+# ================================ 
+# Zsh Plugins 
+# ================================ 
 
 # zplug [https://github.com/zplug/zplug]
 # - Zsh Plugin Manager
@@ -392,7 +282,9 @@ else
 	fi
 fi
 
-# Zsh Widgets ###############################
+# ================================ 
+# Zsh Widgets 
+# ================================ 
 
 function ghqlist () {
 	local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
@@ -404,7 +296,123 @@ function ghqlist () {
 zle -N ghqlist
 bindkey '^]' ghqlist
 
-# dev ###############################
+# ================================ 
+# User Command
+# ================================ 
+
+export PATH=$PATH:~/bin
+
+export PAGER=less
+export LESS='-iNMRj.5'
+
+export EDITOR=vim
+export GIT_EDITOR=vim
+
+# fenc <from> <to> <filepath>
+fenc() {
+  if ! type vim > /dev/null; then
+    echo "Vim is our help and shield."
+    exit 1;
+  fi
+
+  local from="$1"
+  local to="$2"
+  local filepath="$3"
+  : ${from:?} ${to:?} ${filepath:?}
+
+  vim -c ":e ++enc=${from}" -c "set fenc=${to}" -c ":wq" "$filepath"
+}
+
+# ff <file-format>
+ff() {
+  if ! type vim > /dev/null; then
+    echo "Vim is our help and shield."
+    exit 1;
+  fi
+
+  local format="$1"
+  local filepath="$2"
+  : ${format:?} ${filepath:?}
+
+  vim -c ":set ff=${format}" -c ":wq" "$filepath"
+}
+
+# ================================ 
+# Alias
+# ================================ 
+
+alias l='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias l1='ls -a1 --color=auto'
+
+alias d='cd "./$(ls -d1 */ | fzf)"'
+
+alias h='history'
+
+alias grep="grep --color=auto"
+
+alias t='tmux'
+alias v='vim'
+
+# For MacOS
+[[ "$OS_NAME" == MacOS ]] && {
+  # GNU tools
+  if [[ -e "/usr/local/opt/coreutils/libexec/gnubin"  ]]; then
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+  fi
+  if [[ -e "/usr/local/opt/grep/libexec/gnubin"  ]]; then
+    PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+    MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+  fi
+
+  alias lsusb='system_profiler SPUSBDataType'
+
+  alias p='pbpaste'
+}
+
+# For Windows
+[[ $OS_NAME == Windows ]] && {
+  alias m="mintty.exe --daemon"
+  alias s=cygstart
+
+  alias desktop="cd $(cygpath --desktop); pwd"
+  alias home="cd $(cygpath --home)/$USER; pwd"
+  
+  # kill windows process
+  # ("ps -W" lists windows processes.)
+  alias wkill='taskkill /F /pid $@'
+  
+  # sudo
+  if [[ -n "$PS1" ]]; then
+      cygsudo() {
+          local executable=$(which "${1:-cmd}")
+          shift
+          /usr/bin/cygstart --action=runas "$executable" "$@"
+      }
+  
+      if [[ -x "/usr/bin/cygstart" ]]; then
+          alias sudo=cygsudo
+      fi
+  fi
+}  
+
+# ================================ 
+# Style
+# ================================ 
+
+if type -p dircolors >/dev/null ; then
+    eval $(dircolors ~/.dir_colors)
+fi
+
+[[ $OS_NAME == Windows ]] && {
+  # Solarized
+  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
+}
+
+# ================================ 
+# Applications
+# ================================ 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -441,11 +449,11 @@ fi
 
 # jenv (http://www.jenv.be/)
 # Java environment manager
-if [[ -d $HOME/.jenv/bin ]]; then
+if [ -d $HOME/.jenv/bin ] || type jenv >/dev/null; then
   export PATH="$HOME/.jenv/bin:$PATH"
   eval "$(jenv init -)"
 else
-  echo "Please clone gcuisinier/jenv to ~/.jenv" >&2
+  echo "Please install gcuisinier/jenv" >&2
 fi
 
 # sdkman (sdkman.io)
