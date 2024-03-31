@@ -1,34 +1,34 @@
 [user]
-	email = kazuhiko.hrmt@gmail.com
-	name = kazuhikoh
+  email = kazuhiko.hrmt@gmail.com
+  name = kazuhikoh
 [alias]
-	st = status
-	br = branch
-	co = checkout
-	coo = !git branch | fzf | xargs git checkout
-	up = !git push -u origin HEAD
-	cl = clean
-	log = log --graph --decorate
+  st = status
+  br = branch
+  co = checkout
+  coo = !git branch | fzf | xargs git checkout
+  up = !git push -u origin HEAD
+  cl = clean
+  log = log --graph --decorate
 [core]
-	editor = vim
-	autoCRLF = false
-	preloadindex = true
-	fscache = true
+  editor = vim
+  autoCRLF = false
+  preloadindex = true
+  fscache = true
 [pager]
   branch = false
 [merge]
-	ff = false
+  ff = false
 [pull]
-	ff = only
+  ff = only
 [push]
-	default = simple
+  default = simple
 [ghq]
-	root = ~/go/src
+  root = ~/go/src
 
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
 [init]
-	defaultBranch = main
+  defaultBranch = main
