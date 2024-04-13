@@ -57,7 +57,7 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Completion
 # ================================ 
 
-autoload -Uz compinit
+autoload -Uz compinit # && compinit <<DONT run 'compinit' because it's called by zplug>>
 
 zstyle ':compinstall' filename '~/.zshrc'
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -65,8 +65,10 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+type dircolors >/dev/null  && {
+  eval "$(dircolors -b)"
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
@@ -80,15 +82,13 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 zstyle ":completion:*:commands" rehash 1
 
-compinit
-
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
 # Disable zsh builtin commands 
-disable r
+disable r # r: replay last command
 
 # ================================ 
 # Prompt
@@ -214,11 +214,15 @@ function print-prompt {
   if [[ $exitcode == 0 ]]; then
     t_color=003
   else
-    t_color=001
+    t_color=202
   fi
-  local t_face="%F{$t_color}(⊃＾ω＾)⊃ %f"
+  local t_face="%F{$t_color}(⊃＾ω＾)⊃%f"
 
-  echo "${t_os}${t_face}" 
+  if true; then
+    echo "${t_os}${t_face} " 
+  else
+    echo "${t_os} "
+  fi
 }
 
 function print-rprompt {
@@ -226,7 +230,7 @@ function print-rprompt {
   local exitcode_icon='\uf06a' # nf-fa-exclamation_circle
   local exitcode_badge=$(
     if [[ $exitcode != 0 ]]; then
-      print-badge "$exitcode_icon $exitcode" 255 009
+      print-badge "$exitcode_icon $exitcode" 255 202 
     fi 
   )
 
@@ -307,6 +311,10 @@ export LESS='-iNMRj.5'
 
 export EDITOR=vim
 export GIT_EDITOR=vim
+
+function wanip {
+  dig -4 @resolver1.opendns.com myip.opendns.com A +short
+}
 
 # fenc <from> <to> <filepath>
 fenc() {
@@ -411,66 +419,114 @@ fi
 }
 
 # ================================ 
-# Applications
+# Apps
 # ================================ 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# wezterm
+export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+
 # golang
-
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
-
-## syndbg/goenv
-export GOENV_ROOT="$HOME/go/src/github.com/syndbg/goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-
-if [ -d "$GOENV_ROOT" ]; then
-  eval "$(goenv init -)"
-else
-  echo "Please clone syndbg/goenv to $GOENV_ROOT" >&2
-fi
+() {
+  export GOROOT=/usr/local/go
+  export GOPATH=$HOME/go
+  export PATH=$PATH:$GOROOT/bin
+  export PATH=$PATH:$GOPATH/bin
+  
+  ## syndbg/goenv
+  local dir_goenv="$HOME/go/src/github.com/syndbg/goenv"
+  [[ -d "$dir_goenv" ]] && {
+    export GOENV_ROOT="$dir_goenv"
+    export PATH="$PATH:$GOENV_ROOT/bin"
+    eval "$(goenv init -)"
+  }
+}
 
 # Python
-
-# pyenv/pyenv
-export PYENV_ROOT="$HOME/go/github.com/pyenv/pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-if [ -d "$PYENV_ROOT" ]; then
-  eval "$(pyenv init -)"
-else
-  echo "Please clone pyenv/pyenv to $PYENV_ROOT"
-fi
+() {
+  # pyenv/pyenv
+  local dir_pyenv="$HOME/go/github.com/pyenv/pyenv"
+  [[ -d "$dir_pyenv" ]] && {
+    export PYENV_ROOT="$dir_pyenv"
+    export PATH="$PATH:$PYENV_ROOT/bin"
+    eval "$(pyenv init -)"
+  }
+}
 
 # Java
+() {
+  # jenv (http://www.jenv.be/)
+  local dir_jenv="$HOME/.jenv/bin"
+  [[ -d "$dir_jenv" ]] && {
+    export PATH="$PATH:$dir_jenv"
+    eval "$(jenv init -)"
+  }
 
-# jenv (http://www.jenv.be/)
-# Java environment manager
-if [ -d $HOME/.jenv/bin ] || type jenv >/dev/null; then
-  export PATH="$HOME/.jenv/bin:$PATH"
-  eval "$(jenv init -)"
-else
-  echo "Please install gcuisinier/jenv" >&2
-fi
-
-# sdkman (sdkman.io)
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="${HOME}/.sdkman"
-[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+  # sdkman (sdkman.io)
+  local dir_sdkman='$HOME/.sdkman'
+  [[ -d "$dir_sdkman" ]] && {
+    #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+    export SDKMAN_DIR="$dir_sdkman"
+    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+  }
+}
 
 # Node.js
-
-# nodebrew (https://github.com/hokaccha/nodebrew)
-# Node.js version manager
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+() {
+  # nodebrew (https://github.com/hokaccha/nodebrew)
+  # Node.js version manager
+  local dir_nodebrew="$HOME/.nodebrew/current/bin"
+  [[ -d $dir_nodebrew ]] && {
+    export PATH="$PATH:$dir_nodebrew"
+  }
+}
 
 # Android
+() {
+  [[ $OS_NAME == 'MacOS' ]] && {
+    local dir="$HOME/Library/Android/sdk/platform-tools"
+    export PATH="$PATH:$dir"
+  }
+}
 
-if [[ "$(uname)" == 'Darwin' ]]; then
-  export PATH="$HOME/Library/Android/sdk/platform-tools":$PATH
-fi
+
+adbshot() {
+  adb shell screencap -p /sdcard/screen.png
+  adb pull /sdcard/screen.png
+  adb shell rm /sdcard/screen.png
+  mv screen.png $1
+}
+
+adbtcp() {
+  ip=$(adb shell "ip addr | grep inet | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'" | fzf)
+  if [ -z "$ip" ]; then
+    exit 1;
+  fi
+
+  adb tcpip 5555
+
+  echo -n "PRESS ENTER after unplug USB:"
+  read foo
+
+  adb connect $ip:5555
+}
+
+alias pull-apk="adb shell pm list package -f | fzf | grep -oP '(?<=package:).*\.apk' | xargs -I{} adb pull {}"
+
+# Flutter
+() {
+  local dir='/Applications/flutter/bin'
+  [[ -d $dir ]] && {
+    export PATH="$PATH:$dir"
+  }
+}
+
+# .Net
+() {
+  local dir='/usr/local/opt/dotnet/libexec'
+  [[ -d $dir ]] && {
+    export DOTNET_ROOT="$dir"
+  }
+}
 
