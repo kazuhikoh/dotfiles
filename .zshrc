@@ -5,9 +5,9 @@ export LANG=ja_JP.UTF-8
 # ================================ 
 
 function get-os-name {
-  case $(uname -s) in
-    Linux*)  echo 'Linux' ;;
-    Darwin*) echo 'MacOS' ;;
+  case $OSTYPE in
+    linux*)  echo 'Linux' ;;
+    darwin*) echo 'MacOS' ;;
     MINGW*)  echo 'Windows' ;;
     *)       echo 'Unknown' ;;
   esac
