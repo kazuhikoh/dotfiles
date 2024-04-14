@@ -205,7 +205,12 @@ function print-git-badge {
 
 function print-prompt {
   local exitcode=$?
-  
+
+  if false; then
+    echo '> '
+    return
+  fi
+ 
   # [os-icon > directory > 
   
   local t_os="$(print-os-breadcrumb)"
@@ -218,11 +223,7 @@ function print-prompt {
   fi
   local t_face="%F{$t_color}(⊃＾ω＾)⊃%f"
 
-  if true; then
-    echo "${t_os}${t_face} " 
-  else
-    echo "${t_os} "
-  fi
+  echo "${t_os}${t_face} " 
 }
 
 function print-rprompt {
