@@ -1,6 +1,45 @@
 export LANG=ja_JP.UTF-8
 
 # ================================ 
+# Zsh Plugins 
+# ================================ 
+
+# zplug [https://github.com/zplug/zplug]
+# - Zsh Plugin Manager
+if [ -e ~/.zplug ]; then
+  export ZPLUG_HOME=~/.zplug
+else
+  # installed by brew 
+  export ZPLUG_HOME=/usr/local/opt/zplug
+fi
+if [[ ! -f ${ZPLUG_HOME}/init.zsh ]]; then
+  echo "NOT INSTALLED: zplug/zplug (https://github.com/zplug/zplug)"
+else
+	source ${ZPLUG_HOME}/init.zsh
+
+	zplug "b4b4r07/enhancd", use:init.sh
+	zplug "zdharma/fast-syntax-highlighting"
+
+	# zplug check returns true if all packages are installed
+	# Therefore, when it returns false, run zplug install
+	if ! zplug check --verbose; then
+		printf 'Install? [y/N]: '
+		if read -q; then
+			echo; zplug install
+		fi
+	fi
+	
+	# source plugins and add commands to the PATH
+	zplug load
+
+	# zplug check returns true if the given repository exists
+	if zplug check 'b4b4r07/enhancd'; then
+		# setting if enhancd is available
+		export ENHANCD_FILTER=fzf
+	fi
+fi
+
+# ================================ 
 # Check OS
 # ================================ 
 
@@ -252,45 +291,6 @@ chpwd() {
   # iTerm2 tab name
   echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
 }
-
-# ================================ 
-# Zsh Plugins 
-# ================================ 
-
-# zplug [https://github.com/zplug/zplug]
-# - Zsh Plugin Manager
-if [ -e ~/.zplug ]; then
-  export ZPLUG_HOME=~/.zplug
-else
-  # installed by brew 
-  export ZPLUG_HOME=/usr/local/opt/zplug
-fi
-if [[ ! -f ${ZPLUG_HOME}/init.zsh ]]; then
-  echo "NOT INSTALLED: zplug/zplug (https://github.com/zplug/zplug)"
-else
-	source ~/.zplug/init.zsh
-
-	zplug "b4b4r07/enhancd", use:init.sh
-	zplug "zdharma/fast-syntax-highlighting"
-
-	# zplug check returns true if all packages are installed
-	# Therefore, when it returns false, run zplug install
-	if ! zplug check --verbose; then
-		printf 'Install? [y/N]: '
-		if read -q; then
-			echo; zplug install
-		fi
-	fi
-	
-	# source plugins and add commands to the PATH
-	zplug load
-
-	# zplug check returns true if the given repository exists
-	if zplug check 'b4b4r07/enhancd'; then
-		# setting if enhancd is available
-		export ENHANCD_FILTER=fzf
-	fi
-fi
 
 # ================================ 
 # Zsh Widgets 
