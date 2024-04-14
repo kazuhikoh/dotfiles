@@ -119,7 +119,7 @@ Plug 'tpope/vim-surround'
 
 " Color Scheme
 " --------------------------------
-Plug 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim' }
 
 " Filer
 " --------------------------------
