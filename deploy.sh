@@ -8,8 +8,16 @@ for f in .??*
 do
   [[ $f = ".git" ]] && continue
   [[ $f = ".gitignore" ]] && continue
+  [[ $f = ".config" ]] && continue
 
   ln -svf $SCRIPT_DIR/$f $HOME/$f
+done
+
+# Link .config/*
+[[ ! -e $HOME/.config ]] && mkdir $HOME/.config
+for dir in .config/*
+do
+  ln -svf $SCRIPT_DIR/$dir $HOME/$dir
 done
 
 # Link bin/
