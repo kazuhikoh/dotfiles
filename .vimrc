@@ -117,6 +117,10 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 
+" Color Scheme
+" --------------------------------
+Plug 'altercation/vim-colors-solarized'
+
 " Filer
 " --------------------------------
 Plug 'mhinz/vim-startify'
