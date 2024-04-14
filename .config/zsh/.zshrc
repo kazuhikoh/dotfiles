@@ -425,7 +425,9 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # wezterm
-export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+() {
+  export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+}
 
 # golang
 () {
@@ -435,10 +437,9 @@ export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
   export PATH=$PATH:$GOPATH/bin
   
   ## syndbg/goenv
-  local dir_goenv="$HOME/go/src/github.com/syndbg/goenv"
-  [[ -d "$dir_goenv" ]] && {
-    export GOENV_ROOT="$dir_goenv"
-    export PATH="$PATH:$GOENV_ROOT/bin"
+  export GOENV_ROOT="$HOME/go/src/github.com/syndbg/goenv"
+  export PATH="$PATH:$GOENV_ROOT/bin"
+  [[ -d "$GOENV_ROOT" ]] && {
     eval "$(goenv init -)"
   }
 }
@@ -446,62 +447,48 @@ export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 # Python
 () {
   # pyenv/pyenv
-  local dir_pyenv="$HOME/go/github.com/pyenv/pyenv"
-  [[ -d "$dir_pyenv" ]] && {
-    export PYENV_ROOT="$dir_pyenv"
-    export PATH="$PATH:$PYENV_ROOT/bin"
+  export PYENV_ROOT="$HOME/go/github.com/pyenv/pyenv"
+  export PATH="$PATH:$PYENV_ROOT/bin"
+  [[ -d "$PYENV_ROOT" ]] && {
     eval "$(pyenv init -)"
   }
+}
+
+# Ruby
+() {
+  # rbenv
+  if which rbenv >/dev/null; then eval "$(rbenv init -)"; fi
 }
 
 # Java
 () {
   # jenv (http://www.jenv.be/)
-  local dir_jenv="$HOME/.jenv/bin"
-  [[ -d "$dir_jenv" ]] && {
-    export PATH="$PATH:$dir_jenv"
+  export PATH="$PATH:$HOME/.jenv/bin"
+  [[ -d "$HOME/.jenv/bin" ]] && {
     eval "$(jenv init -)"
-  }
-
-  # sdkman (sdkman.io)
-  local dir_sdkman='$HOME/.sdkman'
-  [[ -d "$dir_sdkman" ]] && {
-    #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-    export SDKMAN_DIR="$dir_sdkman"
-    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
   }
 }
 
 # Node.js
 () {
   # nodebrew (https://github.com/hokaccha/nodebrew)
-  # Node.js version manager
-  local dir_nodebrew="$HOME/.nodebrew/current/bin"
-  [[ -d $dir_nodebrew ]] && {
-    export PATH="$PATH:$dir_nodebrew"
-  }
+  export PATH="$PATH:$HOME/.nodebrew/current/bin"
 }
 
 # Android
 () {
   [[ $OS_NAME == 'MacOS' ]] && {
-    local dir="$HOME/Library/Android/sdk/platform-tools"
-    export PATH="$PATH:$dir"
+    export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
   }
-}
-
-
-adbshot() {
-  adb shell screencap -p /sdcard/screen.png
-  adb pull /sdcard/screen.png
-  adb shell rm /sdcard/screen.png
-  mv screen.png $1
+  
+  alias pull-apk="adb shell pm list package -f | fzf | grep -oP '(?<=package:).*\.apk' | xargs -I{} adb pull {}"
 }
 
 adbtcp() {
   ip=$(adb shell "ip addr | grep inet | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'" | fzf)
   if [ -z "$ip" ]; then
-    exit 1;
+    echo 'No IP seleceted'
+    return 1;
   fi
 
   adb tcpip 5555
@@ -512,21 +499,21 @@ adbtcp() {
   adb connect $ip:5555
 }
 
-alias pull-apk="adb shell pm list package -f | fzf | grep -oP '(?<=package:).*\.apk' | xargs -I{} adb pull {}"
+adbshot() {
+  adb shell screencap -p /sdcard/screen.png
+  adb pull /sdcard/screen.png
+  adb shell rm /sdcard/screen.png
+  mv screen.png $1
+}
 
 # Flutter
 () {
-  local dir='/Applications/flutter/bin'
-  [[ -d $dir ]] && {
-    export PATH="$PATH:$dir"
-  }
+  # Dart completion
+  [[ -f $HOME/.dart-cli-completion/zsh-config.zsh ]] && . $HOME/.dart-cli-completion/zsh-config.zsh || true
 }
 
 # .Net
 () {
-  local dir='/usr/local/opt/dotnet/libexec'
-  [[ -d $dir ]] && {
-    export DOTNET_ROOT="$dir"
-  }
+  export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
 }
 
