@@ -259,7 +259,12 @@ chpwd() {
 
 # zplug [https://github.com/zplug/zplug]
 # - Zsh Plugin Manager
-export ZPLUG_HOME=~/.zplug
+if [ -e ~/.zplug ]; then
+  export ZPLUG_HOME=~/.zplug
+else
+  # installed by brew 
+  export ZPLUG_HOME=/usr/local/opt/zplug
+fi
 if [[ ! -f ${ZPLUG_HOME}/init.zsh ]]; then
   echo "NOT INSTALLED: zplug/zplug (https://github.com/zplug/zplug)"
 else
