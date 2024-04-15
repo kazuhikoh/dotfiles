@@ -189,9 +189,8 @@ function print-badge {
 }
 
 function get-git-info {
-  if [ ! -e ".git" ]; then
-    return
-  fi
+  ! type git >/dev/null && return
+  ! git rev-parse --is-inside-work-tree >/dev/null 2>/dev/null && return
 
   local branch_name=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   local branch_status
