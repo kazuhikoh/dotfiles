@@ -1,78 +1,4 @@
 " ================================
-" Plugins (using junegunn/vim-plug)
-" ================================
-
-" Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
-
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
-
-call plug#begin('~/.vim/plugged')
-
-" --------------------------------
-" Color Scheme
-" --------------------------------
-Plug 'altercation/vim-colors-solarized', { 'do': '[ ! -e ~/.vim/colors ] && mkdir -p ~/.vim/colors; ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim' }
-
-" --------------------------------
-" Completion
-" --------------------------------
-Plug 'junegunn/vim-easy-align'
-Plug 'cohama/lexima.vim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'tpope/vim-surround'
-
-" --------------------------------
-" Filer
-" --------------------------------
-Plug 'mhinz/vim-startify'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
-let g:NERDTreeShowHidden=1
-autocmd VimEnter * execute 'NERDTree'
-
-Plug 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
-
-" --------------------------------
-" Syntax
-" --------------------------------
-
-" markdown
-Plug 'plasticboy/vim-markdown'
-Plug 'kannokanno/previm'
-Plug 'tyru/open-browser.vim'
-autocmd BufRead,BufNewFile *.md set filetype=markdown
-" C^p でプレビュー
-nnoremap <silent><C-p> :PrevimOpen<CR>
-" 折りたたみ無効
-let g:vim_markdown_folding_disabled=1
-
-" golang
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-autocmd BufNewFile,BufRead *.go nmap <F9> :GoBuild<CR>
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-
-" kotlin
-Plug 'udalov/kotlin-vim'
-
-" --------------------------------
-" GitHub
-" --------------------------------
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-call plug#end()
-" -> Initialize plugin system
-
-
-" ================================
 " Options
 " ================================
 
@@ -171,4 +97,93 @@ set statusline+=[%{has('multi_byte')&&\&fileencoding!=''?&fileencoding:&encoding
 set statusline+=%y
 
 set rtp+=/usr/local/opt/fzf
+
+" ================================
+" Plugins (using junegunn/vim-plug)
+" ================================
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+call plug#begin('~/.vim/plugged')
+
+" --------------------------------
+" Color Scheme
+" --------------------------------
+
+Plug 'altercation/vim-colors-solarized', { 'do': '[ ! -e ~/.vim/colors ] && mkdir -p ~/.vim/colors; ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim' }
+
+" --------------------------------
+" Completion
+" --------------------------------
+
+Plug 'junegunn/vim-easy-align'
+Plug 'cohama/lexima.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'tpope/vim-surround'
+
+" --------------------------------
+" Filer
+" --------------------------------
+
+Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+let g:NERDTreeShowHidden=1
+autocmd VimEnter * execute 'NERDTree'
+
+Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
+" --------------------------------
+" Syntax
+" --------------------------------
+
+" markdown
+Plug 'plasticboy/vim-markdown'
+Plug 'kannokanno/previm'
+Plug 'tyru/open-browser.vim'
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+" C^p でプレビュー
+nnoremap <silent><C-p> :PrevimOpen<CR>
+" 折りたたみ無効
+let g:vim_markdown_folding_disabled=1
+
+" golang
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+autocmd BufNewFile,BufRead *.go nmap <F9> :GoBuild<CR>
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+
+" kotlin
+Plug 'udalov/kotlin-vim'
+
+" --------------------------------
+" GitHub
+" --------------------------------
+
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+call plug#end()
+" -> Initialize plugin system
+
+" --------------------------------
+" Load ~/.vim/_config/*.vim
+" --------------------------------
+
+let s:plugs = get(s:, 'plugs', get(g:, 'plugs', {}))
+function! FindPlugin(name) abort
+  return has_key(s:plugs, a:name) ? isdirectory(s:plugs[a:name].dir) : 0
+endfunction
+command! -nargs=1 UsePlugin if !FindPlugin(<args>) | finish | endif
+
+runtime! _config/*.vim
 
