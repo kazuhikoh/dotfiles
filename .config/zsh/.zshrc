@@ -1,5 +1,7 @@
 export LANG=ja_JP.UTF-8
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # ================================ 
 # Zsh Plugins 
 # ================================ 
@@ -367,6 +369,9 @@ alias grep="grep --color=auto"
 alias t='tmux'
 alias v='vim'
 
+alias yt-mp4='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"' 
+alias yt-mp3='yt-dlp -x --audio-format mp3'
+
 # For MacOS
 [[ "$OS_NAME" == MacOS ]] && {
   # GNU tools
@@ -409,19 +414,6 @@ alias v='vim'
       fi
   fi
 }  
-
-# ================================ 
-# Style
-# ================================ 
-
-if type -p dircolors >/dev/null ; then
-    eval $(dircolors ~/.dir_colors)
-fi
-
-[[ $OS_NAME == Windows ]] && {
-  # Solarized
-  source "$GOPATH/src/github.com/mavnn/mintty-colors-solarized/sol.light"
-}
 
 # ================================ 
 # Apps
@@ -513,6 +505,9 @@ adbshot() {
 
 # Flutter
 () {
+  export PATH="$PATH:$HOME/fvm/default/bin"
+  export PATH="$PATH:$HOME/.pub-cache/bin"
+
   # Dart completion
   [[ -f $HOME/.dart-cli-completion/zsh-config.zsh ]] && . $HOME/.dart-cli-completion/zsh-config.zsh || true
 }
