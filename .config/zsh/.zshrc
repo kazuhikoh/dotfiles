@@ -45,15 +45,14 @@ fi
 # Check OS
 # ================================ 
 
-function get-os-name {
+OS_NAME=$(
   case $OSTYPE in
     linux*)  echo 'Linux' ;;
     darwin*) echo 'MacOS' ;;
     MINGW*)  echo 'Windows' ;;
     *)       echo 'Unknown' ;;
   esac
-}
-OS_NAME=$(get-os-name)
+)
 
 # ================================ 
 # Key Binding
