@@ -142,10 +142,10 @@ disable r # r: replay last command
 PROMPT_EMOJI=$(
   zoo=(
     "🐁" "🐈" "🐕️" "🐇" "🦔" 
-    "🐄" "🐖" "🦌" "🐴" "🦄" 
+    "🐄" "🐖" "🦌" "🐎" "🎠" "🦄" 
     "🐅" "🐆" "🦒" "🐘" "🦣" 
-    "🦎" "🐊" "🐢" "🐍"
-    "🪿" "🦆" "🐦" "🐤" "🐧" "🦅" "🦚" "🦤"
+    "🦎" "🐊" "🐢" "🐍" 
+    "🪿" "🦆" "🐦" "🐤" "🐧" "🦅" "🦚" "🦤" 
     "🐬" "🐳" "🦭" "🐠" "🐡" "🪼" "🐙" "🦑" "🦐" "🦀" 
     "🦖" "🦕" "🐉" 
   )
@@ -221,16 +221,15 @@ function print-git-badge {
 }
 
 function print-prompt {
-  local exitcode=$?
-
-  local t_color
-  if [[ $exitcode == 0 ]]; then
-    t_color=003
-  else
-    t_color=202
-  fi
-
-  echo "%F{$t_color}${PROMPT_EMOJI} >%f " 
+  #local exitcode=$?
+  #local t_color
+  #if [[ $exitcode == 0 ]]; then
+  #  t_color=003
+  #else
+  #  t_color=202
+  #fi
+  #echo "${PROMPT_EMOJI} %F{$t_color}>%f " 
+  echo "${PROMPT_EMOJI} > "
 }
 
 function print-rprompt {
