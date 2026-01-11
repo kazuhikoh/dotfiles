@@ -139,41 +139,19 @@ disable r # r: replay last command
 #promptinit
 #prompt adam1
 
-function print-breadcrumb {
-  local text=$1
-  local fgcolor=$2
-  local bgcolor=$3
-  local nextcolor="$4"
-
-  local arrow='\ue0b0' # nf-pl-left_hard_divider
-
-  local part_text="%F{$fgcolor}%K{$bgcolor}$text%f%k"
-  local part_arrow 
-  if [[ $nextcolor == '' ]]; then
-    part_arrow="%F{$bgcolor}$arrow%f"
-  else
-    part_arrow="%F{$bgcolor}%K{$nextcolor}$arrow%f%k"
-  fi
-
-  echo "${part_text}${part_arrow}"
-}
-
-function print-os-breadcrumb {
-  local nextcolor=$1
-
-  local os_icon
-  case $OS_NAME in
-    Linux) os_icon='\ue712' ;;
-    MacOS) os_icon='\ue711' ;;
-    Windows) os_icon='\ue70f' ;;
-    *) echo "?" ;;
-  esac
-
-  local fgcolor=255 # white
-  local bgcolor=003 # yellow
-
-  echo "$(print-breadcrumb " $os_icon " $fgcolor $bgcolor $nextcolor)"
-}
+PROMPT_EMOJI=$(
+  zoo=(
+    "🐁" "🐈" "🐕️" "🐇" "🦔" 
+    "🐄" "🐖" "🦌" "🐴" "🦄" 
+    "🐅" "🐆" "🦒" "🐘" "🦣" 
+    "🦎" "🐊" "🐢" "🐍"
+    "🪿" "🦆" "🐦" "🐤" "🐧" "🦅" "🦚" "🦤"
+    "🐬" "🐳" "🦭" "🐠" "🐡" "🪼" "🐙" "🦑" "🦐" "🦀" 
+    "🦖" "🦕" "🐉" 
+  )
+  i=$((RANDOM % ${#zoo[@]}))
+  echo "${zoo[i]}"
+)
 
 function print-badge {
   local text="$1"
@@ -245,24 +223,14 @@ function print-git-badge {
 function print-prompt {
   local exitcode=$?
 
-  if false; then
-    echo '> '
-    return
-  fi
- 
-  # [os-icon > directory > 
-  
-  local t_os="$(print-os-breadcrumb)"
-
   local t_color
   if [[ $exitcode == 0 ]]; then
     t_color=003
   else
     t_color=202
   fi
-  local t_face="%F{$t_color}(⊃＾ω＾)⊃%f"
 
-  echo "${t_os}${t_face} " 
+  echo "%F{$t_color}${PROMPT_EMOJI} >%f " 
 }
 
 function print-rprompt {
