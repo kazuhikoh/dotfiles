@@ -333,7 +333,7 @@ alias h='history'
 alias grep="grep --color=auto"
 
 alias t='tmux'
-alias v='vim'
+alias v='nvim'
 
 alias yt-mp4='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"' 
 alias yt-mp3='yt-dlp -x --audio-format mp3'

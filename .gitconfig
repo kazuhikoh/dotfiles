@@ -10,7 +10,7 @@
   cl = clean
   log = log --graph --decorate
 [core]
-  editor = vim
+  editor = nvim
   autoCRLF = false
   preloadindex = true
   fscache = true
