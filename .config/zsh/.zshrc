@@ -146,7 +146,7 @@ PROMPT_EMOJI=$(
     "🐅" "🐆" "🦒" "🐘" "🦣" 
     "🦎" "🐊" "🐢" "🐍" 
     "🪿" "🦆" "🐦" "🐤" "🐧" "🦅" "🦚" "🦤" 
-    "🐬" "🐳" "🦭" "🐠" "🐡" "🪼" "🐙" "🦑" "🦐" "🦀" 
+    "🐬" "🐳" "🦭" "🐠" "🐡" "🪼" "🐙" "🦑" "🦀" 
     "🦖" "🦕" "🐉" 
   )
   i=$((RANDOM % ${#zoo[@]}))
@@ -214,8 +214,8 @@ function print-git-badge {
     esac
   )
 
-  local fgcolor=255 # white
-  local bgcolor=003 # yellow
+  local fgcolor=000 # black
+  local bgcolor=248 # lightgrey
 
   echo "$(print-badge "${t_icon} ${t_branch}${t_status}" $fgcolor $bgcolor)"
 }
