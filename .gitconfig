@@ -23,7 +23,7 @@
 [push]
   default = simple
 [ghq]
-  root = ~/go/src
+  root = ~/dev/repo
 
 [filter "lfs"]
   process = git-lfs filter-process
