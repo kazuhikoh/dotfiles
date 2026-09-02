@@ -56,4 +56,5 @@ vim.api.nvim_create_user_command('W', 'noautocmd w', {})
 --======================== 
 
 require("config.lazy")
+require("config.keymaps")
 
