@@ -1,0 +1,19 @@
+# Style #####################
+
+theme = Nightfox
+font-size = 12
+background-opacity = 0.8
+
+# Clipborad #################
+
+clipboard-read = allow
+clipboard-write = allow
+
+
+# 新規タブでディレクトリを引き継ぐ
+window-inherit-working-directory = true
+
+# Others ####################
+
+quit-after-last-window-closed = true
+
