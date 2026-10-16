@@ -1,0 +1,36 @@
+[settings]
+dotfiles.root = "~/dev/repo/github.com/kazuhikoh/dotfiles"
+dotfiles.default_mode = "symlink"
+
+[bootstrap.packages]
+"brew:zsh-autosuggestions" = "latest"
+"brew:zplug" = "latest"
+"brew:git" = "latest"
+"brew:tig" = "latest"
+"brew:coreutils" = "latest"
+"brew:grep" = "latest"
+"brew:tmux" = "latest"
+"brew:neovim" = "latest"
+"brew:ghq" = "latest"
+"brew:gh" = "latest"
+"brew:fzf" = "latest"
+"brew:jq" = "latest"
+"brew-cask:font-hack-nerd-font" = "latest"
+
+[dotfiles]
+"~/.zshenv" = { mode = "symlink" }
+"~/.gitconfig" = { mode = "symlink" }
+"~/.gitconfig.commit.template" = { mode = "symlink" }
+"~/.tigrc" = { mode = "symlink" }
+"~/.config/zsh" = { mode = "symlink" }
+"~/.config/tmux" = { mode = "symlink" }
+"~/.config/nvim" = { mode = "symlink" }
+"~/.config/ghostty" = { mode = "symlink" }
+"~/.config/wezterm" = { mode = "symlink" }
+"~/.claude/CLAUDE.md" = { mode = "symlink" }
+"~/.claude/settings.json" = { mode = "symlink" }
+"~/.claude/scripts" = { mode = "symlink" }
+"~/.claude/output-styles" = { mode = "symlink" }
+"~/.claude/skills/*" = { mode = "symlink" }
+"~/bin" = { mode = "symlink" }
+
